@@ -58,6 +58,20 @@ Exercises:
     2. [Occupation](https://github.com/HassanAlgoz/pandas_exercises/blob/master/03_Grouping/Occupation/Exercise.ipynb)
     3. [Regiment](https://github.com/HassanAlgoz/pandas_exercises/blob/master/03_Grouping/Regiment/Exercises.ipynb)
 
+Bonus Exercises:
+
+4. Apply
+    1. [Students Alcohol Consumption](https://github.com/HassanAlgoz/pandas_exercises/blob/master/04_Apply/Students_Alcohol_Consumption/Exercises.ipynb)
+    2. [US_Crime_Rates](https://github.com/HassanAlgoz/pandas_exercises/blob/master/04_Apply/US_Crime_Rates/Exercises.ipynb)
+5. Merge
+    1. [Auto_MPG](https://github.com/HassanAlgoz/pandas_exercises/blob/master/05_Merge/Auto_MPG/Exercises.ipynb)
+    2. [Fictitious Names](https://github.com/HassanAlgoz/pandas_exercises/blob/master/05_Merge/Fictitous_Names/Exercises.ipynb)
+    3. [House Market](https://github.com/HassanAlgoz/pandas_exercises/blob/master/05_Merge/Housing_Market/Exercises.ipynb) 
+6. Stats
+    1. [US_Baby_Names](https://github.com/HassanAlgoz/pandas_exercises/tree/master/06_Stats/US_Baby_Names/Exercises.ipynb)
+    2. [Wind_Stats](https://github.com/HassanAlgoz/pandas_exercises/tree/master/06_Stats/Wind_Stats/Exercises.ipynb)
+
+
 ## Module 3: Descriptive Statistics
 
 ### M3-1: Statistical Analysis
