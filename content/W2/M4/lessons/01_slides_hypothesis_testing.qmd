@@ -1,0 +1,243 @@
+---
+title: "Hypothesis Testing"
+format:
+  revealjs:
+    incremental: false
+    slide-level: 2
+---
+
+## Descriptive vs inferential
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+- **Describe:** means, plots, tables for the data in hand.  
+- **Infer:** use those summaries to reason about **what we did not observe**—under uncertainty.
+
+We make **claims** and test them with defined procedures.
+
+:::
+
+::: {.column width="60%"}
+
+![](../../assets/inferential-statistics.png){fig-alt="Diagram contrasting descriptive and inferential statistics"}
+
+:::
+
+::::
+
+::: {.notes}
+Frame the notebook’s arc: we already know how to summarize samples; now we ask whether patterns are **more than noise**. Tie to the course story (e.g., “Are NBA players really taller?”): that is inference, not just plotting means.
+
+Walk the diagram: descriptive stays with the sample; inference reaches toward the population or toward “if we repeated the study.” The external image in the notebook serves the same role; this local asset matches the idea. Emphasize: inference always involves **assumptions** and **limits**—we will name a few (normality, independence) later.
+:::
+
+## Everyday claims
+
+People assert things like:
+
+- Coffee keeps you awake at night.  
+- Exercise makes you smarter.  
+- “Everyone” is addicted to smartphones.
+
+**Question:** how do we test such statements against reality—not with one story, but with data?
+
+::: {.notes}
+
+Use this slide to surface **anecdotes** vs **systematic evidence**. Do not dismiss anecdotes; they generate hypotheses—but they do not replace sampling and tests. Transition: we formalize claims as $H_0$ and $H_a$.
+
+:::
+
+
+## Two competing statements
+
+In every formal test we line up:
+
+1. **Null hypothesis ($H_0$):** the “status quo” or **no effect**. Any difference you see could be **chance** (sampling noise).  
+2. **Alternative hypothesis ($H_a$ or $H_1$):** what you seek evidence **for**—a real effect, difference, or relationship.
+
+::: {.notes}
+
+Stress language: we never “prove $H_0$” in a single study; we **fail to reject** it when evidence is weak. That sets up the p-value slide. Students often confuse “accept null” with “no effect”—correct that gently.
+
+:::
+
+## Why anecdotes fail
+
+**Anecdotal evidence:** personal stories or isolated incidents—not a systematic sample.
+
+We turn anecdotes into **parameters** and **data**:
+
+- Swordfish mercury → compare **mean** mercury in many fish to a **regulatory threshold**.  
+- Duke graduation time → compare Duke’s distribution to a **national** benchmark.  
+- A new drug → compare **survival** in treatment vs **control** (placebo), not one patient.
+
+::: {.notes}
+
+Use the notebook’s three vignettes quickly: news story, two students at Duke, friend’s dad. For each, name the **population parameter** (mean $\mu$, proportion $p$, survival rate) and the need for **comparison groups** where relevant.
+
+:::
+
+## Example formulations
+
+| Example | $H_0$ | $H_a$ | Parameter |
+|--------|---------|---------|------------|
+| Mercury | Mean $\le$ 1.0 ppm | Mean $>$ 1.0 ppm | $\mu$ |
+| Duke grad | Rate $\le$ national avg. | Rate $>$ national avg. | $p$ |
+| Heart drug | Death rate (drug) $=$ (placebo) | Death rate (drug) $<$ (placebo) | survival / $p$ |
+
+::: {.notes}
+
+This table is the bridge from English claims to symbols. Pause on **direction**: one-sided vs two-sided tests come from how $H_a$ is stated. The lab will mirror this when they write hypotheses for their own questions.
+
+:::
+
+## Which test answers your question?
+
+Methods differ by **what you ask**:
+
+1. **Difference** in one numeric variable (often **t-tests**).  
+2. **Association** between two **categorical** variables (**chi-square**).  
+3. **Association** between two **numeric** variables (**Pearson** correlation—and alternatives).
+
+::: {.notes}
+
+Keep it high level: this deck focuses on **t-tests**; chi-square and Pearson are pointers to later work or other modules. The decision tree slide will show how these pieces fit on one map.
+
+:::
+
+## p-values and $\alpha$
+
+Test output includes a **p-value**.
+
+- If **p $< \alpha$** (convention: **$\alpha = 0.05$**), we **reject $H_0$**.  
+- If **p $\ge \alpha$**, we **fail to reject $H_0$**—not the same as “$H_0$ is true.”
+
+**Courtroom analogy:** $H_0$ $\approx$ “innocent until proven guilty.” “Not guilty” can mean **lack of evidence**, not proof of innocence.
+
+::: {.notes}
+
+Hammer the wording: **“fail to reject”** not **“accept”**. Same as the notebook. If time, mention that $\alpha$ is a **community convention**, not a law of nature—preregistered studies may justify other thresholds.
+
+:::
+
+## Testing differences: three t-test situations
+
+**t-tests** compare **means** in three setups:
+
+1. **One sample:** sample mean vs a **reference** (population or standard).  
+2. **Independent samples:** two **unrelated** groups (e.g., treatment vs control).  
+3. **Paired:** same units **twice**, or **natural pairs** (twins, matched pairs).
+
+[Video overview](https://youtu.be/Q_pO9NzWxPY) (numiqo).
+
+![](../../assets/t-test.png){fig-align="center" .r-stretch}
+
+::: {.notes}
+
+Let the figure carry structure. After this slide, unpack each case in one slide each—fast, because the picture is the anchor.
+
+:::
+
+## Case 1: One sample vs a reference
+
+Compare $\bar{x}$ from **your sample** to a known or assumed **$\mu$**:
+
+- Student heights vs **national** average.  
+- IQ in a group vs **population** mean.  
+- Cholesterol vs **clinical** guideline.
+
+**Notebook example:** NBA player heights vs general population ( **`ttest_1samp`** ).
+
+::: {.notes}
+
+“Population” here often means a **benchmark** from literature or policy, not a full census. The NBA vs humans example is vivid: huge separation, tiny p-value—good for pedagogy, not subtle statistics.
+
+:::
+
+## Case 2: Two independent samples
+
+Two **different** groups:
+
+- **Control** (placebo) vs **treatment** (drug).  
+- Male vs female penguins on **body mass** (**`ttest_ind`**).
+
+**Notebook:** tips from smokers vs non-smokers (same function, different story).
+
+::: {.notes}
+
+Check **independence**: different rows, no pairing. Common mistake: using `ttest_ind` on before/after data from the **same** people—that is paired.
+
+:::
+
+## Case 3: Paired data
+
+**3.1 One group, two measurements:** before/after, method A vs method B on the **same** subjects (spinach and grip strength in the notebook).
+
+**3.2 Natural pairs:** twin A vs twin B, husband–wife, mother–baby—each row is a **pair** (**`ttest_rel`**).
+
+::: {.notes}
+
+Contrast with independent: pairing **removes between-person noise** and can hugely change the result. The notebook’s grip-strength example is ideal for code walkthrough in the notebook itself.
+
+:::
+
+## SciPy: functions to remember
+
+| Idea | SciPy |
+|------|--------|
+| One sample vs mean | `ttest_1samp` |
+| Two independent groups | `ttest_ind` |
+| Paired differences | `ttest_rel` |
+| Numeric association | `pearsonr`, `spearmanr` |
+| Categorical association | `chi2_contingency` (+ `association`) |
+
+::: {.notes}
+
+Point to the [SciPy stats docs](https://docs.scipy.org/doc/scipy/reference/stats.html)—students will copy-paste the right function once the **question type** is clear. Mention **alternative** (`two-sided`, `less`, `greater`) matches how $H_a$ is directional.
+
+:::
+
+## Choosing a test (decision tree)
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+- **Comparison** or **relationship**?  
+- **How many** groups? **Paired** or not?  
+- Variable types: numeric vs categorical?
+
+Use the tree to **narrow** choices before coding.
+
+:::
+
+::: {.column width="60%"}
+
+![](../../assets/comparison_and_relationship.png){width="100%" fig-alt="Decision tree for selecting statistical tests"}
+
+:::
+
+::::
+
+::: {.notes}
+
+This is the same figure as the notebook. Encourage students to **print** or bookmark it. It prevents “I ran a t-test because I always run a t-test.”
+
+:::
+
+## Beyond two groups: ANOVA (preview)
+
+- A **t-test** compares **two** means.
+- With **three or more** groups (e.g., penguin **species** on body mass) use **one-way ANOVA** as the omnibus test; or better yet: **Tukey HSD**.
+
+::: {.notes}
+
+The notebook adds ANOVA/Tukey briefly; mention **multiple comparisons** problem in one sentence. Full treatment belongs to follow-up reading or another session.
+
+:::
+
+## Lab
+
+[Lab Notebook](./01_hypothesis_testing.ipynb) — NBA heights, penguins, tips, paired spinach, ANOVA.

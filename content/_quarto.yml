@@ -8,7 +8,7 @@ project:
     - index.qmd
     - W1/
     - W2/
-    - W3/
+    # - W3/
 
 website:
   navbar:
@@ -16,15 +16,15 @@ website:
       - href: W1/
         text: "Python"
       - href: W2/
-        text: "DS"
-      - href: W3/
-        text: "ML"
-      - href: W4/
-        text: "DL"
-      - href: W5/
-        text: "Agentic"
-      - href: W6/
-        text: "Vibe"
+        text: "Data Science"
+      # - href: W3/
+        # text: "ML"
+      # - href: W4/
+      #   text: "DL"
+      # - href: W5/
+      #   text: "Agentic"
+      # - href: W6/
+      #   text: "Vibe"
   sidebar: 
     style: docked
     search: true

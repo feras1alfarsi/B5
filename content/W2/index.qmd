@@ -1,4 +1,5 @@
 ---
+title: "Applied Data Science Course"
 format: "html"
 ---
 
@@ -12,16 +13,18 @@ Learning outcomes:
 4. Distinguish between Data Engineers, Data Analysts and Machine Learning Engineers
 5. Define Data Analysis
 6. Distinguish between CDA and EDA and give one example for each
+7. Recognize that outliers can actually inform our investigation and are not to be treated as random noise or errors
 
 Lessons and labs:
 
-1. [Introduction to Data Science Processes and Roles](./M1/lessons/01_intro.qmd)
+1. [Introduction to Data Science Processes and Roles](./M1/lessons/01_slides_intro.qmd)
 2. [Lab 1: Confirmatory Data Analysis (CDA)- blind typing experiment](./M1/lessons/02_lab_cda_blind_typing.ipynb)
 3. [Lab 2: Exploratory Data Analysis (EDA)- US Census 2010-2019](./M1/lessons/03_lab_eda_census.ipynb)
 
-Exercises:
+#### Exercises
 
 1. [John Snow](./M1/exercises/john_snow.qmd) (3 questions)
+2. [M1 Exercise Quiz](./M1/exercises/m1_exercise_quiz_1.md) (20 questions) - **load into NotebookLM or Gemini**
 
 ## Module 2: Data Wrangling
 
@@ -42,7 +45,7 @@ Lessons and labs:
 3. [Lab: Pandas Function application](./M2/lessons/03_pd_function_application.ipynb)
 4. [Lab: Bike Sharing](./M2/lessons/04_lab_bike_sharing.ipynb)
 
-Exercises:
+#### Exercises
 
 1. Getting to Know your Data:
     1. [World Food Facts](https://github.com/HassanAlgoz/pandas_exercises/blob/master/01_Getting_%26_Knowing_Your_Data/World_Food_Facts/Exercises.ipynb)
@@ -57,29 +60,54 @@ Exercises:
     2. [Occupation](https://github.com/HassanAlgoz/pandas_exercises/blob/master/03_Grouping/Occupation/Exercise.ipynb)
     3. [Regiment](https://github.com/HassanAlgoz/pandas_exercises/blob/master/03_Grouping/Regiment/Exercises.ipynb)
 
+#### Bonus Exercises
+
+4. Apply
+    1. [Students Alcohol Consumption](https://github.com/HassanAlgoz/pandas_exercises/blob/master/04_Apply/Students_Alcohol_Consumption/Exercises.ipynb)
+    2. [US_Crime_Rates](https://github.com/HassanAlgoz/pandas_exercises/blob/master/04_Apply/US_Crime_Rates/Exercises.ipynb)
+5. Merge
+    1. [Auto_MPG](https://github.com/HassanAlgoz/pandas_exercises/blob/master/05_Merge/Auto_MPG/Exercises.ipynb)
+    2. [Fictitious Names](https://github.com/HassanAlgoz/pandas_exercises/blob/master/05_Merge/Fictitous_Names/Exercises.ipynb)
+    3. [House Market](https://github.com/HassanAlgoz/pandas_exercises/blob/master/05_Merge/Housing_Market/Exercises.ipynb) 
+6. Stats
+    1. [US_Baby_Names](https://github.com/HassanAlgoz/pandas_exercises/tree/master/06_Stats/US_Baby_Names/Exercises.ipynb)
+    2. [Wind_Stats](https://github.com/HassanAlgoz/pandas_exercises/tree/master/06_Stats/Wind_Stats/Exercises.ipynb)
+
+#### Videos
+
+If you like walkthroughs, follow this [YouTube Playlist](https://www.youtube.com/playlist?list=PLgJhDSE2ZLxaY_DigHeiIDC1cD09rXgJv) which go through the exercises as well.
+
 ## Module 3: Descriptive Statistics
 
 ### M3-1: Statistical Analysis
 
 Learning outcomes:
 
-1. Define statistics
-2. Distinguish between Population and Sample
-3. Give examples of numerical variables and categorical variables
-4. Recognize the two type of summaries: numerical and visual
-5. Explain what *Proportion* is
-6. Explain what a *Distribution* is
-7. Describe what are the mean and variance
-8. Explain what a *Percentile* means
-9. Describe how do we get a z-score and why we might need it
-10. Explain what is 1, 2, and 3 standard deviations mean for a normal distribution
-11. Given a box-and-whiskers plot, identify its graphical elements and tell what they mean
-12. Given a plot like the Comparative Sex IQ Distribution, make at least 2 interpretations
-13. Given a plot like the Comparative Sex IQ Distribution, recognize whether a statement is true or not
-14. Name at least 2 outlier-removal methods and explain how they work
-15. Given a distribution plot; name it (e.g., normal, uniform, or skewed to the right)
+1. Describe what statistics is all about
+2. Identify the two types of statistics and how they work together
+3. Distinguish between Population and Sample
+4. Given a dataset, identify the numerical and categorical variables
+5. Provide more examples of numerical variables and categorical variables
+6. Describe common statistics like: *Proportion*, *Mean* an *Variance* (and calculate them).
+7. Identify at least two key elements that describe a Distribution, (and calculate them).
+8. Describe different shapes of distributions using terms like: normal/gaussian, uniform, skewed, and exponential
+9. Give at least 2 examples of normally distributed data
+10. Give at least 1 example of non-normally distributed data (e.g., exponential)
+11. Explain what a *Percentile* means in layman terms; (and calculate them).
+12. Explain what is 1, 2, and 3 standard deviations mean for a normal distribution (and calculate them)
+13. Given a box-and-whiskers plot, identify its graphical elements and tell what they mean
+15. Given a plot make general statements about the samples using words like: "most", "few"
+16. Given a general statement about a samples, verify whether it is true or not
+18. Name at least 2 outlier-removal methods and explain how they work
 
-Lesson: [Statistical Analysis](./M3/lessons/01_statistics.ipynb).
+Lessons:
+
+- [Lesson: Statistics](./M3/lessons/01_slides_statistics.qmd)
+- [Lab: Statistics](./M3/lessons/01_statistics.ipynb)
+
+#### Exercises
+
+1. [Exercise](./M3/exercises/m3-1_exercise.qmd)
 
 ### M3-2: Statistical Visualization
 
@@ -90,26 +118,28 @@ Learning outcomes:
 3. Distinguish between Histogram and Barplot
 4. Given a DataFrame, make subplots via the `col` and `row` parameters in a figure-level function
 5. Given a DataFrame, make subplots and put custom plots using axes-level functions; and have them do `sharex=True` or `sharey=True`
-6. Given a DataFrame, plot the ECDF and interpret it
-7. Given a DataFrame, plot a bi-variate histogram and interpret it
-8. Visualize numerical vs categorical relationships using `sns.catplot()`
-9. Visualize multiple categorical variables in one plot
-10. Use different colors, markers, and styles in a plot
-11. Relate variables using scatter plot
-12. Identify issues in a given visualization and suggest improvements
+6. Given a dataset, write code to show a box plot
+7. Given a dataset, write code to show two distributions on the same figure axes
+8. Given a DataFrame, plot the ECDF and interpret it
+9. Given a DataFrame, plot a bi-variate histogram and interpret it
+10. Visualize numerical vs categorical relationships using `sns.catplot()`
+11. Visualize multiple categorical variables in one plot
+12. Use different colors, markers, and styles in a plot
+13. Relate variables using scatter plot
+14. Identify issues in a given visualization and suggest improvements
 
 Lessons and labs:
 
-1. [Python Visualization Tools](./M3/lessons/02_viz_tools.ipynb)
+1. [Python Visualization Tools](./M3/lessons/02_data_viz.ipynb)
 2. [Visualizing distributions of data](./M3/lessons/03_displot.ipynb)
 3. [Visualizing categorical data](./M3/lessons/04_catplot.ipynb)
 4. [Visualizing statistical relationships](./M3/lessons/05_relplot.ipynb)
-5. [Effective communication of exploratory results](./M3/lessons/06_effective_viz.ipynb)
+5. [Effective communication of exploratory results](./M3/lessons/06_effective_comm.qmd)
 
-Exercises:
+#### Exercises
 
-1. [Visualization Exercises](./M3/exercises/viz_exercises.ipynb) (4 questions)
-2. [EDA Penguins](./M3/exercises/eda_penguins_ex.ipynb) (7 questions)
+1. [Exercise](./M3/exercises/m3-2_exercise.qmd)
+2. [Visualization Exercises](./M3/exercises/viz_exercises.ipynb)
 
 ## Module 4: Inferential Statistics
 
@@ -127,7 +157,11 @@ Learning outcomes:
 8. Given a hypothesis in statistical terms, explain it in layman terms
 9. Recognize when the test is two-sided or one-sided (and in which direction)
 
-Lab: [Hypothesis Testing](./M4/lessons/01_hypothesis_testing.ipynb).
+Lessons:
+
+- [Lesson: Hypothesis Testing](./M4/lessons/01_slides_hypothesis_testing.qmd)
+- [Lab: Hypothesis Testing](./M4/lessons/01_hypothesis_testing.ipynb)
+
 
 ### M4-2: Association and Correlation
 
@@ -144,11 +178,28 @@ Learning outcomes:
 9. Explain the phrase "correlation does not imply causation" and give at least 1 example of your own
 10. Explain what a *Confounding Variable* is
 
-Labs:
+Lessons:
 
-1. [Categorical Association](./M4/lessons/02_cat_association.ipynb)
-2. [Numerical Correlation](./M4/lessons/03_num_correlation.ipynb)
+- [Lab 1: Categorical Association](./M4/lessons/02_cat_association.ipynb)
+- [Lab 2: Numerical Correlation](./M4/lessons/03_num_correlation.ipynb)
 
-Exercises:
+#### Exercises
 
 1. [Hypothesis Testing](./M4/exercises/hypothesis_ex.ipynb) (4 questions)
+
+
+## Projects
+
+You will do all three projects, but only 1 will be presented:
+
+- [Project 1: Fast Food Marketing Campaign A/B Test](./Project/p1/p1_fast_food.qmd)
+- [Project 2: Student Exam Performance Factors](./Project/p2/p2_student_exam.qmd)
+- [Project 3: Global Mental Health Crisis Index 2026](./Project/p3/p3_GMHCI-2026.qmd)
+
+---
+
+## References
+
+- https://openintro-ims.netlify.app/
+- https://www.coursera.org/professional-certificates/google-advanced-data-analytics
+- https://www.kaggle.com/learn/data-visualization

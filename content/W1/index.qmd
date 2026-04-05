@@ -1,4 +1,5 @@
 ---
+title: "Python Course"
 format: "html"
 ---
 
@@ -23,7 +24,7 @@ Worked Examples:
 1. [Numbers](https://halgoz.quarto.pub/pythonia/exercises/01_numbers/apps.html)
 2. [Control Flow](https://halgoz.quarto.pub/pythonia/exercises/02_control_flow/apps.html)
 
-Exercises (read instructions below):
+### Exercises (read instructions below)
 
 - [Chapter 1: Programming as a Way of Thinking](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap01.ipynb)
 - [Chapter 2: Variables and Statements](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap02.ipynb)
@@ -60,7 +61,7 @@ Worked Examples:
 2. [Dictionary](https://halgoz.quarto.pub/pythonia/exercises/04_mapping/apps.html)
 3. [Procedural](https://halgoz.quarto.pub/pythonia/exercises/05_procedural/apps.html)
 
-Exercises:
+### Exercises
 
 - [Chapter 7: Iteration and Search](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap07.ipynb)
 - [Chapter 9: Lists](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap09.ipynb)
@@ -74,13 +75,13 @@ Lessons:
 9. [Functional programming](https://halgoz.quarto.pub/pythonia/content/09_functional.html)
 10. [Error](https://halgoz.quarto.pub/pythonia/content/10_errors.html)
 
-Exercises:
+### Exercises
 
 - [Chapter 14: Classes and Functions](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap14.ipynb)
 - [Chapter 15: Classes and Methods](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap15.ipynb)
 - [Chapter 16: Classes and Objects](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/chap16.ipynb)
 
-## Final Problems
+## Final Exercises
 
 1. [List and Dict Access](https://halgoz.quarto.pub/pythonia/exercises/indexing_problems.html)
 2. [Ceasar Cipher](https://halgoz.quarto.pub/pythonia/exercises/ceasar_cipher_problem.html)

@@ -1,0 +1,38 @@
+---
+format: html
+toc-depth: 2
+---
+
+- **Semantic Search**
+  - **Use Cases???**
+  - Building Applications: [BERTopic](https://maartengr.github.io/BERTopic/index.html)
+  - Selecting and Fine-tuning Models:
+    - [SentenceTransformers: State-of-the-Art Text Embeddings](https://github.com/huggingface/sentence-transformers)
+     - [Three (3) Model Types](https://www.sbert.net/#what-next)
+    - [Fine-tune Embedding Models](https://unsloth.ai/docs/basics/embedding-finetuning)
+     - Example: [EmbeddingGemma (300M) with Sentence Transformers](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/EmbeddingGemma_(300M).ipynb)
+- **LLMs**
+  - **Use Cases???**
+  - Building Applications: LangChain
+  - Selecting and Fine-tuning Models:
+    - Transformers (e.g., [Qari-OCR v2 using VLM | NAMAA](https://huggingface.co/NAMAA-Space))
+    - Unsloth
+- [Datasets](https://huggingface.co/docs/hub/en/datasets-overview)
+  - how to get splits
+  - the viewer and how to use it
+  - how to convert to DataFrame
+- **Sharing demos** with [Gradio](https://www.gradio.app/guides/quickstart)
+- **Docker** (required by LabelStudio and UnslothStudio)
+- **Data Curation** with [LabelStudio](https://labelstud.io/guide) (alternative: [Argilla](https://huggingface.co/learn/llm-course/chapter10/1))
+  1. First impression: [Template Gallery](https://labelstud.io/templates/)
+  2. Setup: [Getting Started With Label Studio: A Step-By-Step Guide](https://labelstud.io/learn/getting-started-with-label-studio/) -- REQUIRES DOCKER
+  3. [Introduction to Machine Learning with Label Studio](https://labelstud.io/blog/introduction-to-machine-learning-with-label-studio/)
+  4. [How to Connect Hugging Face with Label Studio SDK](https://labelstud.io/tutorials/how_to_connect_hugging_face_with_label_studio_sdk)
+    - HF → LS: Load datasets from Hugging Face into Label Studio for annotation
+    - LS → HF: Export labeled data from Label Studio for model training
+    - HF → LS: Connect Hugging Face models as ML backends for pre-annotations and active learning
+
+Easy Computer Vision:
+
+- [Ultralytics Website](https://www.ultralytics.com/)
+- [Ultralytics Platform](https://platform.ultralytics.com/): Train, Deploy, and Scale Ultralytics YOLO Models

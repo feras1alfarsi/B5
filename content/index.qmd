@@ -26,7 +26,7 @@ format: "html"
 
 1. [Python](W1/)
 2. [Applied Data Science](W2/)
-3. [Applied Machine Learning](W3/)
+3. Applied Machine Learning
 4. Applied Deep Learning
 5. Agentic AI
 6. Agentic Engineering

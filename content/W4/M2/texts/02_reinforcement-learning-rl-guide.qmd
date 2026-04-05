@@ -1,0 +1,447 @@
+---
+title: "Reinforcement Learning (RL) Guide"
+format: html
+---
+
+*Adapted from the [Unsloth RL guide](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide).*
+
+Reinforcement Learning is where an "agent" learns to make decisions by interacting with an environment and receiving **feedback** in the form of **rewards** or **penalties**.
+
+* **Action:** What the model generates (e.g. a sentence).
+* **Reward:** A signal indicating how good or bad the model's action was (e.g. did the response follow instructions? was it helpful?).
+* **Environment:** The scenario or task the model is working on (e.g. answering a user's question).
+
+### What you will learn
+
+1. What is RL? RLVR? PPO? GRPO? RLHF? RFT? Is **"Luck is All You Need?"** for RL?
+2. What is an environment? Agent? Action? Reward function? Rewards?
+
+This article covers everything (from beginner to advanced) you need to know about GRPO, Reinforcement Learning (RL) and reward functions, along with tips, and the basics of using GRPO with [Unsloth](https://github.com/unslothai/unsloth). If you're looking for a step-by-step tutorial for using GRPO, see the Unsloth guide [Train your own reasoning model with GRPO](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/tutorial-train-your-own-reasoning-model-with-grpo).
+
+::: {.callout-tip}
+## Updates
+
+**Jan 15, 2026:** [Ultra long context RL](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/grpo-long-context) is here. Train gpt-oss with a 380K context window.
+
+**Nov 26, 2025:** [FP8 precision RL and GRPO](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/fp8-reinforcement-learning) in Unsloth.
+:::
+
+## What is Reinforcement Learning (RL)?
+
+The goal of RL is to:
+
+1. **Increase the chance of seeing "good" outcomes.**
+2. **Decrease the chance of seeing "bad" outcomes.**
+
+**That's it!** There are intricacies on what "good" and "bad" means, or how we go about "increasing" or "decreasing" it, or what even "outcomes" means.
+
+:::: {.columns}
+
+::: {.column width="50%"}
+For example, in the **Pacman game**:
+
+1. The **environment** is the game world.
+2. The **actions** you can take are UP, LEFT, RIGHT and DOWN.
+3. The **rewards** are good if you eat a cookie, or bad if you hit one of the squiggly enemies.
+4. In RL, you can't know the "best action" you can take, but you can observe intermediate steps, or the final game state (win or lose)
+:::
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-e853f7e6da505ee587642314b98180ebf840252c%2FRL%20Game.png?alt=media){fig-alt="Pacman-style RL diagram"}
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-30bade1550c877bb7f79075c80ac79476b0ecd76%2FMath%20RL.png?alt=media){fig-alt="Math question as RL"}
+:::
+
+::: {.column width="50%"}
+Another example: you are given the question **"What is 2 + 2?"** (answer 4). An unaligned language model might output 3, 4, C, D, -10, literally anything.
+
+1. Numbers are better than C or D, right?
+2. Getting 3 is better than 8, right?
+3. Getting 4 is definitely correct.
+
+You have just designed a **reward function**!
+:::
+
+::::
+
+### From RLHF, PPO to GRPO and RLVR
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-5d0c90e4b45507d3e12c8b938cbd1679cd38f4f9%2FRLHF.png?alt=media){fig-alt="RLHF diagram"}
+:::
+
+::: {.column width="50%"}
+OpenAI popularized [RLHF](https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback) (Reinforcement Learning from Human Feedback), where we train an **agent** to produce outputs to a question (the **state**) that are rated more useful by humans.
+
+The thumbs up and down in ChatGPT, for example, can be used in the RLHF process.
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-1e1dff9c921e787e669dee79c41a76db89e882e7%2FPPO.png?alt=media){fig-alt="PPO diagram"}
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-f6156f2c519baf81e6ef286476f4092037303799%2FPPO%20formula.png?alt=media){fig-alt="PPO formula" fig-cap="PPO formula"}
+
+The clip(..., 1-e, 1+e) term is used to force PPO not to take too large changes. There is also a KL term with beta set to > 0 to force the model not to deviate too much from the reference policy.
+:::
+
+::: {.column width="50%"}
+To do RLHF, [**PPO**](https://en.wikipedia.org/wiki/Proximal_policy_optimization) (Proximal Policy Optimization) was developed. The **agent** is the language model in this case. In fact it is composed of three systems:
+
+1. The **generating policy** (current trained model)
+2. The **reference policy** (original model)
+3. The **value model** (average reward estimator)
+
+The **reward model** scores the current completion, and the goal is to **maximize** that signal.
+
+The formula for PPO looks complicated because it was designed to be stable. See the [Unsloth AI Engineer 2025 talk](https://docs.unsloth.ai/ai-engineers-2025) for deeper math on PPO.
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-4f4e188edbcad4f53aaa4a626bc5b2fd01334574%2FGRPO%20%2B%20RLVR.png?alt=media){fig-alt="GRPO and RLVR"}
+:::
+
+::: {.column width="50%"}
+DeepSeek developed [**GRPO**](https://unsloth.ai/blog/grpo) (Group Relative Policy Optimization) to train their R1 reasoning models. The key differences from PPO are:
+
+1. The **value model is removed**, replaced with statistics from multiple samples.
+2. The **separate reward model** can be replaced with a **custom reward function**, as in **RLVR**.
+:::
+
+::::
+
+This means GRPO is extremely efficient. Previously PPO needed to train multiple models; with the value model and (often) the learned reward model out of the picture, you save memory and speed things up.
+
+**RLVR (Reinforcement Learning with Verifiable Rewards)** lets you reward the model on tasks with easy-to-verify solutions. For example:
+
+1. Math equations can be verified (e.g. 2+2 = 4).
+2. Code output can be verified by execution.
+3. Designing verifiable reward functions can be hard, so many examples are math or code.
+4. GRPO is not only for code or math—reasoning can help email automation, retrieval, law, and medicine, depending on your data and reward. The trick is to define a **rubric**: a list of smaller verifiable rewards, not one monolithic score. OpenAI describes a related idea in [reinforcement fine-tuning (RFT)](https://platform.openai.com/docs/guides/reinforcement-fine-tuning).
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Why "group relative"?**
+
+GRPO removes the value model entirely, but you still need an estimate of **average reward** given the current state.
+
+The trick is to **sample the LLM** multiple times, then estimate average reward from those samples across prompts.
+:::
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-29e188e5adc6de1e62c841e6cd9e34a2dae4994a%2FGroup%20Relative.png?alt=media){fig-alt="Group relative illustration"}
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+For "What is 2+2?" you might sample four answers: 4, 3, D, C. You score each, then compute **mean** and **standard deviation**, then **z-score** standardize.
+
+That produces **advantages A**, which replace the value model and save a lot of memory.
+:::
+
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-d40a73cd48b05b9205810a1946f4fc1dce81ae7d%2FStatistics.png?alt=media){fig-alt="GRPO advantage from statistics" fig-cap="GRPO advantage calculation"}
+:::
+
+::::
+
+### Luck (well patience) is all you need
+
+RL needs only two things:
+
+1. A question or instruction (e.g. "What is 2+2?", "Create a Flappy Bird game in Python").
+2. A reward function and verifier to judge whether the output is good or bad.
+
+With those, you can **sample the model many times** until a good answer appears. For "What is 2+2?", a weak model might emit junk until it occasionally outputs **4** and gets a high reward.
+
+So by chance, RL can find the correct answer across many **rollouts**. The goal is to make **4** much more likely and junk much less likely.
+
+**In the limit, if the probability of the correct answer is small but non-zero, repeated sampling will eventually hit it**—hence the phrase **"luck is all you need"**; **"patience is all you need"** is the more sober version.
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-4f0cb4803aa22583e88dfa8de8061b66bbe6a6b1%2FLuck%20is%20all%20you%20need.png?alt=media){width="375" fig-alt="Luck is all you need"}
+
+RL does not only wait for lucky samples: **bad samples provide negative signal**, so the policy is nudged away from bad completions. Over time you **reshape** the output distribution toward the correct region, which makes learning **efficient**.
+
+::: {.callout-warning}
+If the probability of any useful completion is **always zero**, RL cannot help. That is one reason people start from an **instruction-tuned** model so the policy already has some chance of valid behavior.
+:::
+
+## What Unsloth offers for RL
+
+* With 15GB VRAM, Unsloth allows you to turn many models up to ~17B parameters (e.g. Llama 3.1 8B, Phi-4 14B, Mistral 7B, Qwen2.5 7B) into reasoning-style models.
+* **RL for vision / multimodal** is supported—see [Vision reinforcement learning (VLM RL)](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/vision-reinforcement-learning-vlm-rl).
+* **Rough minimum:** about **5GB VRAM** for local reasoning-style training on small models (about 1.5B parameters or less).
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- [Tutorial: train your own reasoning model with GRPO](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/tutorial-train-your-own-reasoning-model-with-grpo)
+:::
+
+::: {.column width="50%"}
+- [Vision reinforcement learning (VLM RL)](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/vision-reinforcement-learning-vlm-rl)
+:::
+
+::::
+
+::: {.callout-note}
+For **advanced GRPO** (batching, generation, training parameters), see the [Advanced RL documentation](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/advanced-rl-documentation).
+:::
+
+### GRPO notebooks {#grpo-notebooks}
+
+| [Qwen3.5 (4B) Vision — new](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Qwen3_5_(4B)_Vision_GRPO.ipynb) | [Qwen3-VL-8B Vision GSPO](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Qwen3_VL_(8B)-Vision-GRPO.ipynb) | [Gemma 3 (4B) Vision GSPO](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Gemma3_(4B)-Vision-GRPO.ipynb) |
+| --- | --- | --- |
+| [gpt-oss-20b GSPO](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/gpt-oss-(20B)-GRPO.ipynb) | [DeepSeek-R1-0528-Qwen3-8B](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/DeepSeek_R1_0528_Qwen3_(8B)_GRPO.ipynb) | [Llama 3.2 (3B) Advanced](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Advanced_Llama3_2_(3B)_GRPO_LoRA.ipynb) |
+| [Qwen3 (4B) Advanced](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Qwen3_(4B)-GRPO.ipynb) | [Phi-4 (14B)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Phi_4_(14B)-GRPO.ipynb) | [Qwen2.5 (3B)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Qwen2.5_(3B)-GRPO.ipynb) |
+| [Mistral v0.3 (7B)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Mistral_v0.3_(7B)-GRPO.ipynb) | [Llama 3.1 (8B)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Llama3.1_(8B)-GRPO.ipynb) | [Qwen3-8B FP8 (L4)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Qwen3_8B_FP8_GRPO.ipynb) |
+
+::: {.callout-tip}
+Unsloth supports [**GSPO**](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/advanced-rl-documentation/gspo-reinforcement-learning) and related variants. Example `GRPOConfig` knobs:
+
+```python
+epsilon=0.2,
+epsilon_high=0.28,  # one sided
+delta=1.5  # two sided
+
+loss_type='gspo',
+# or:
+loss_type='grpo',
+# or:
+loss_type='dr_grpo',
+
+mask_truncated_completions=True,
+```
+:::
+
+* If you see no reasoning, check training length and that your [reward function / verifier](#reward-functions-verifier) is wired correctly; see [reward function examples](#reward-function-examples).
+* Earlier demos used large GPUs for small models; Unsloth targets much lower VRAM for similar ideas.
+* GRPO works with **QLoRA and LoRA**, not only full fine-tuning.
+* For [**20K context**](#grpo-requirement-guidelines) with eight generations per prompt, Unsloth reports far lower VRAM than a standard FA2-style stack for Llama 3.1 8B.
+* This is about **training** a model with GRPO, not only using R1-distilled checkpoints.
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-5ae836156344a7c22241d0f76dbea09d58e04f8f%2Fprompt%20only%20example.png?alt=media){fig-alt="Phi-4 with and without GRPO thinking token"}
+
+## Training with GRPO
+
+Step-by-step: [Train your own reasoning model with GRPO](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/tutorial-train-your-own-reasoning-model-with-grpo).
+
+::: {.callout-tip}
+Advanced topics: [Advanced RL documentation](https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide/advanced-rl-documentation).
+:::
+
+### How GRPO trains a model
+
+1. For each prompt, the model generates several completions (e.g. eight).
+2. Each completion is scored with your reward functions.
+3. **Steps:** with 300 rows, one pass is ~300 optimizer steps (× epochs if you repeat data). You can raise the number of samples per prompt (e.g. 8 → 16).
+4. Weights update every step from the GRPO objective.
+
+::: {.callout-warning}
+If learning stalls, try the [Advanced GRPO notebooks](https://unsloth.ai/docs/unsloth-notebooks#grpo-reasoning-notebooks)—they use stronger reward shaping.
+:::
+
+### Basics and tips
+
+* Wait at least **~300 steps** before expecting clear reward trends; long runs (on the order of **hours**) are common.
+* **500+ prompts** is a better default than tiny sets (though you can experiment with tens).
+* Runs differ by model, data, and rewards; some setups need **1000+** steps.
+* Local Unsloth: install **`diffusers`** if prompted; keep **vLLM** current.
+* Prefer models **≥ ~1.5B** parameters if you want reliable “thinking”-style behavior.
+* VRAM rule of thumb for **4-bit QLoRA**: model size in billions ≈ minimum practical VRAM (context and LoRA rank increase this). **16-bit LoRA** needs several times more.
+* **Continuous training** is fine—GRPO can run in the background.
+* Example notebooks often use [**GSM8K**](#gsm8k-reward-functions)-style rewards.
+* **Chat templates** matter if you start from a base model.
+* Reward vs. step should trend up over time when the setup is healthy.
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-e44683faa4765a3b803edd4c02c4b468e45cc91d%2Funnamed.png?alt=media){width="563" fig-alt="Reward vs steps"}
+
+Training logs for GRPO (including per–reward-function breakdowns) are built into Unsloth.
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fgit-blob-58d958e1a3bfd968f1b1a4995a28261aa6413337%2FScreenshot%202025-02-20%20at%2004-52-52%20Copy%20of%20Yet%20another%20copy%20of%20Llama3.1_(8B)-GRPO.ipynb%20-%20Colab.png?alt=media){fig-alt="Unsloth GRPO logging UI"}
+
+### RL on models without vLLM
+
+You can run RL on models that vLLM does not support yet (e.g. [Qwen3.5](https://unsloth.ai/docs/models/qwen3.5/fine-tune)) by disabling fast inference:
+
+```python
+from unsloth import FastLanguageModel
+
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Qwen3.5-4B",
+    fast_inference=False,
+)
+```
+
+## Reward functions / verifiers {#reward-functions-verifier}
+
+In RL, a **reward function** and a **verifier** are related but not identical:
+
+**Verifier**
+
+* Decides whether an output is correct (boolean / discrete check), often without a numeric score.
+* Example: answer "5" for 2+2 is **wrong**.
+* Can run code (e.g. execute a program) to check behavior.
+
+**Reward function**
+
+* Maps criteria (including verifier output) to a **scalar** score.
+* Example: wrong → −3, correct → +3; optional penalties for length or style.
+
+**Summary:** verifiers **check**; reward functions **score**. A reward function often **calls** a verifier.
+
+### Understanding reward functions
+
+* GRPO **updates weights** to increase expected reward—not only next-token likelihood.
+* **SFT** optimizes likelihood; GRPO optimizes your **task metric** (via rewards).
+* You can **reuse** the same prompts across epochs.
+* Rewards can be hand-coded, learned, or hybrid; **bad rewards** can hurt you as much as good ones help.
+
+### Reward function examples {#reward-function-examples}
+
+You can prototype rewards by critiquing samples with another model (“too robotic → −3”, etc.).
+
+#### Example 1: simple arithmetic
+
+* **Question:** `2 + 2`
+* **Answer:** `4`
+* **Reward 1:** number present → +1; no number → −1
+* **Reward 2:** matches gold → +3; else → −3
+* **Total:** sum of terms
+
+#### Example 2: email automation
+
+* Keyword present → +1
+* Matches gold template → +1
+* Too long → −1
+* Uses recipient name → +1
+* Signature block present → +1
+
+### Unsloth proximity-based rewards
+
+The [advanced GRPO notebooks](#grpo-notebooks) include a **proximity** reward: closer numeric (or structured) answers score higher than wild guesses.
+
+* Reasoning templates beyond a bare `think` tag (e.g. custom XML segments)
+* Regex checks and **pre-finetuning** to avoid “format-only” hacking
+* **Graded** scores instead of a single all-or-nothing gate where it helps
+
+#### GSM8K-style helpers {#gsm8k-reward-functions}
+
+Examples often reuse GSM8K reward snippets (e.g. by [@willccbb](https://x.com/willccbb)):
+
+* **correctness_reward_func** — exact match to label
+* **int_reward_func** — prefer integer answers
+* **soft_format_reward_func** / **strict_format_reward_func** — structure checks
+* **xmlcount_reward_func** — tag balance / count constraints
+
+## Using vLLM
+
+[vLLM](https://github.com/vllm-project/vllm/) can sit in the same stack for **fast generation** during training. Throughput depends on GPU; Unsloth’s integration avoids **duplicate** weight copies when both Unsloth and vLLM are loaded (meaningful VRAM savings on larger models).
+
+Enable fast inference after installing vLLM:
+
+```python
+# pip install unsloth vllm
+from unsloth import FastLanguageModel
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Llama-3.2-3B-Instruct",
+    fast_inference=True,
+)
+```
+
+## GRPO requirement guidelines {#grpo-requirement-guidelines}
+
+Unsloth applies several tricks (efficient linear kernels, gradient checkpointing, shared GPU memory with the inference engine, etc.) so **long-context GRPO** is far cheaper than a naive FA2 baseline for the same model width.
+
+1. **VRAM (4-bit QLoRA):** very rough rule—**billions of parameters ≈ minimum VRAM in GB** before headroom for context and batching. More context and **16-bit LoRA** scale this up.
+2. **Kernels + checkpointing** reduce activation memory on long sequences.
+3. **Shared vLLM / training memory** avoids loading two full copies of weights.
+
+| Metric | Unsloth | Standard + FA2 |
+| --- | --- | --- |
+| Training memory (GB) | 42 | 414 |
+| GRPO memory (GB) | 9.8 | 78.3 |
+| Inference weights (GB) | 0 | 16 |
+| KV cache 20K ctx (GB) | 2.5 | 2.5 |
+| **Total (example)** | **54.3** | **510.8** |
+
+Naive GRPO can materialize huge logit tensors; Unsloth’s path is aimed at **long context without** those multi-hundred-GB peaks.
+
+The **KV cache** (16-bit) for Llama 3.1 8B at 20K tokens is on the order of **2.5GB** per batch in the illustrative table; batching vLLM increases KV needs proportionally.
+
+## Unsloth RL workshop (video)
+
+```{=html}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OkEGJ5G3foU" title="Unsloth RL workshop" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+
+## Further reading
+
+1. Nathan Lambert — [RLHF book, policy gradients](https://rlhfbook.com/c/11-policy-gradients.html)
+2. Yannic Kilcher — [GRPO video](https://www.youtube.com/watch?v=bAWV_yrqx4w)
+3. [AI Engineer 2025 materials (Unsloth)](https://docs.unsloth.ai/ai-engineers-2025)
+4. [Advanced GRPO notebook (docs)](https://docs.unsloth.ai/basics/reinforcement-learning-guide/tutorial-train-your-own-reasoning-model-with-grpo)
+5. [Qwen3 (4B) GRPO from base (Colab)](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Qwen3_(4B)-GRPO.ipynb)
+
+## More video tutorials
+
+```{=html}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9t-BAjzBWj8" title="RL / GRPO tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{=html}
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/bbFEYPx9Hpo?start=3289" title="Dataset prep and RL + GRPO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+:::
+
+::: {.column width="50%"}
+```{=html}
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/oF0_eMhzRaQ" title="RL tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{=html}
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/juOh1afy-IE" title="GRPO tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+:::
+
+::: {.column width="50%"}
+```{=html}
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/SoPE1cUz3Hs" title="Local GRPO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+:::
+
+::::
+
+---
+
+References:
+
+- https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide

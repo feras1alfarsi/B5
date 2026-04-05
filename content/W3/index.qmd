@@ -16,7 +16,6 @@ toc-depth: 2
 1. Recognize the three main topics of ML
 
 **Materials:** [[Slides]](M1/lessons/01_slides_Intro_ML.qmd)
-**Assignments:** [Penguins EDA](M1/exercises/01_eda_penguins_ex.ipynb)
 
 ### M1-2: Linear Models
 

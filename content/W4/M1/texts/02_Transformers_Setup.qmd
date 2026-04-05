@@ -1,0 +1,42 @@
+---
+title: "Setup: HuggingFace Transformers"
+format: html
+---
+
+## Introduction
+
+Welcome to the Hugging Face course! This introduction will guide you through setting up a working environment.
+
+Most of the course relies on you having a Hugging Face account. We recommend creating one now: [create an account](https://huggingface.co/join).
+
+## Using a Google Colab notebook
+
+Using a Colab notebook is the simplest possible setup; boot up a notebook in your browser and get straight to coding! 
+
+If you're not familiar with Colab, we recommend you start by following the [introduction](https://colab.research.google.com/notebooks/intro.ipynb). Colab allows you to use some accelerating hardware, like GPUs or TPUs, and it is free for smaller workloads.
+
+Once you're comfortable moving around in Colab, create a new notebook and get started with the setup.
+
+The next step is to install the libraries that we'll be using in this course. We'll use `pip` for the installation, which is the package manager for Python. In notebooks, you can run system commands by preceding them with the `!` character, so you can install the 🤗 Transformers library as follows:
+
+```bash
+!pip install transformers
+```
+
+## Using a Google Colab notebook (cont.)
+
+You can make sure the package was correctly installed by importing it within your Python runtime:
+
+```python
+import transformers
+```
+
+This installs a very light version of 🤗 Transformers. In particular, no specific machine learning frameworks (like PyTorch or TensorFlow) are installed. Since we'll be using a lot of different features of the library, we recommend installing the development version, which comes with all the required dependencies for pretty much any imaginable use case:
+
+```bash
+!pip install transformers[sentencepiece]
+```
+
+This will take a bit of time, but then you'll be ready to go for the rest of the course!
+
+You're now all set up and ready to go!

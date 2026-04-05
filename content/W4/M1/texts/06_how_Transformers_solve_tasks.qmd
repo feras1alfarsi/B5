@@ -1,0 +1,90 @@
+---
+title: "How 🤗 Transformers solve tasks"
+format: html
+---
+
+Owing to its flexible architecture, most Transformer models are a variant of an encoder, a decoder, or an encoder-decoder structure.
+
+Before diving into specific architectural variants, it's helpful to understand that most tasks follow a similar pattern: input data is processed through a model, and the output is interpreted for a specific task. The differences lie in:
+
+1. **Pre-processing**: how the input data is prepared
+2. **Processing**: based on model architecture variant used
+3. **Post-processing**: how the output is processed
+
+## Transformer models for language 
+
+Language models are at the heart of modern NLP. They're designed to understand and generate human language by learning the statistical patterns and relationships between words or tokens in text.
+
+The Transformer was initially designed for machine translation, and since then, it has become the default architecture for solving all AI tasks. Some tasks lend themselves to the Transformer's encoder structure, while others are better suited for the decoder. Still, other tasks make use of both the Transformer's encoder-decoder structure.
+
+## How language models work
+
+Language models work by being trained to predict the probability of a word given the context of surrounding words.
+
+1. **Masked language modeling (MLM)**: Used by encoder models like BERT, this approach randomly masks some tokens in the input and trains the model to predict the original tokens based on the surrounding context. 
+
+2. **Causal language modeling (CLM)**: Used by decoder models like GPT, this approach predicts the next token based on all previous tokens in the sequence. The model can only use context from the left (previous tokens) to predict the next token.
+
+## Types of language models
+
+1. **Encoder-only models** (like BERT): These models use a bidirectional approach. They're best suited for tasks that require deep understanding of text, such as classification, named entity recognition, and question answering.
+
+2. **Decoder-only models** (like GPT, Llama): These models process text from left to right and are particularly good at text generation tasks. They can complete sentences, write essays, or generate code.
+
+3. **Encoder-decoder models** (like T5, BART): These models combine both approaches, using an encoder to understand the input and a decoder to generate output. They excel at sequence-to-sequence tasks like translation and summarization.
+
+## Text generation
+
+Text generation involves creating coherent and contextually relevant text based on a prompt or input.
+
+GPT-2 is a decoder-only model pretrained on a large amount of text. 
+
+1. GPT-2 uses byte pair encoding (BPE) to tokenize words and generate a token embedding. The input embeddings are passed through multiple decoder blocks to output some final hidden state. GPT-2 uses a *masked self-attention* layer which means it can't attend to future tokens.
+2. The output from the decoder is passed to a language modeling head, which performs a linear transformation to convert the hidden states into logits. The label is the next token in the sequence.
+
+## Text classification
+
+Text classification involves assigning predefined categories to text documents, such as sentiment analysis, topic classification, or spam detection.
+
+BERT is an encoder-only model and is the first model to effectively implement deep bidirectionality.
+
+1. BERT uses WordPiece tokenization. A special `[CLS]` token is added to the beginning. 
+2. BERT is pretrained with two objectives: masked language modeling and next-sentence prediction. 
+3. The input embeddings are passed through multiple encoder layers. To use the pretrained model for text classification, add a sequence classification head on top of the base BERT model.
+
+## Token classification & Question answering
+
+**Token classification** involves assigning a label to each token in a sequence, such as in named entity recognition or part-of-speech tagging. To use BERT for token classification tasks, add a token classification head on top of the base BERT model.
+
+**Question answering** involves finding the answer to a question within a given context or passage. To use BERT for question answering, add a span classification head on top of the base BERT model. This linear layer accepts the final hidden states and performs a linear transformation to compute the `span` start and end logits corresponding to the answer.
+
+## Summarization
+
+Summarization involves condensing a longer text into a shorter version.
+Encoder-decoder models like BART and T5 are designed for the sequence-to-sequence pattern of a summarization task.
+
+1. BART's encoder architecture is very similar to BERT. BART is pretrained by corrupting the input and then reconstructing it with the decoder.
+2. The encoder's output is passed to the decoder, which must predict the masked tokens and any uncorrupted tokens from the encoder's output. The output from the decoder is passed to a language modeling head.
+
+## Translation
+
+Translation involves converting text from one language to another while preserving its meaning. This is another example of a sequence-to-sequence task, which means you can use an encoder-decoder model like BART or T5 to do it.
+
+BART adapts to translation by adding a separate randomly initialized encoder to map a source language to an input that can be decoded into the target language.
+
+## Modalities beyond text: Speech and audio
+
+Whisper is an encoder-decoder (sequence-to-sequence) transformer pretrained on 680,000 hours of labeled audio data. 
+
+1. An **encoder** processes the input audio. The raw audio is first converted into a log-Mel spectrogram. This spectrogram is then passed through a Transformer encoder network.
+2. A **decoder** takes the encoded audio representation and autoregressively predicts the corresponding text tokens. Special tokens are used to steer the model towards specific tasks like transcription, translation, or language identification.
+
+## Modalities beyond text: Computer vision
+
+[ViT](https://huggingface.co/docs/transformers/model_doc/vit) replaces convolutions entirely with a pure Transformer architecture.
+
+1. An image is split into square non-overlapping patches, each of which gets turned into a vector or *patch embedding*.
+2. A *learnable embedding* - a special `[CLS]` token - is added to the beginning.
+3. *Position embeddings* are added because the model doesn't know how the image patches are ordered. All of the embeddings are passed to the Transformer encoder.
+4. The output, specifically only the output with the `[CLS]` token, is passed to a multilayer perceptron head (MLP) for classification.
+

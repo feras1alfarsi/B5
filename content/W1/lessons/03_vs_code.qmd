@@ -8,7 +8,7 @@ format:
 
 # VS Code Basics
 
-Local tutorial: text is excerpted from the official Visual Studio Code documentation pages.
+Text is excerpted from the official Visual Studio Code documentation pages.
 
 First: [Download and Install VS Code](https://code.visualstudio.com/Download).
 
@@ -34,6 +34,7 @@ At its heart, Visual Studio Code is a code editor. Like many other code editors,
 This screenshot introduces the six core regions of VS Code. Point out where learners should spend most of their time: Explorer, editor, terminal panel, and status bar.
 
 The six main areas are:
+
 -   **Editor** - The main area to edit your files. You can open as many editors as you like side by side vertically and horizontally.
 -   **Primary Side Bar** - Contains different views like the Explorer to assist you while working on your project.
 -   **Secondary Side Bar** - Opposite the Primary Side Bar. By default, contains the Chat view. Drag and drop views from the Primary Side Bar to the Secondary Side Bar to move them.
@@ -62,13 +63,13 @@ Up next: five visual slides showing editor layouts, floating windows, views, and
 You can open as many editors as you like side by side vertically and horizontally. If you already have an editor open, there are multiple ways of opening another editor to the side:
 
 Common ways to open a split include:
+
 -   Alt and select a file in the Explorer view.
 -   ⌘\\ (Windows, Linux Ctrl+\\) to split the active editor into two.
 -   **Open to the Side** (⌃Enter (Windows, Linux Ctrl+Enter)) from the Explorer context menu on a file.
 -   Select the **Split Editor** button in the upper right of an editor.
 -   Drag and drop a file to any side of the editor region. Hold Ctrl (Option on macOS) while dragging to copy the tab instead of moving it.
 -   Press ⌃Enter (Windows, Linux Ctrl+Enter) in the **Quick Open** (⌘P (Windows, Linux Ctrl+P)) file list.
-
 
 When you open another file, the editor that is active will display the content of that file. If you have two editors side by side and you want to open file 'foo.cs' into the right-hand editor, make sure that this editor is active (by clicking inside it) before opening file 'foo.cs'.
 
@@ -100,6 +101,7 @@ VS Code uses editor groups whether or not you have enabled tabs. Without tabs, e
 VS Code is equally accessible from the keyboard. The most important key combination to know is ⇧⌘P (Windows, Linux Ctrl+Shift+P), which brings up the **Command Palette**. From here, you have access to all functionality within VS Code, including keyboard shortcuts for the most common operations.
 
 In the Command Palette, these quick keys do the following:
+
 -   ⌘P (Windows, Linux Ctrl+P) enables you to navigate to any file or symbol by typing its name
 -   ⌃Tab (Windows, Linux Ctrl+Tab) cycles you through the last set of files opened
 -   ⇧⌘P (Windows, Linux Ctrl+Shift+P) brings you directly to the editor commands
@@ -343,6 +345,7 @@ You can configure advanced search options by selecting the ellipsis (**Toggle Se
 You can use Quick Search to quickly find text across all files in the currently opened folder. Open the Command Palette (⇧⌘P (Windows, Linux Ctrl+Shift+P)) and enter the **Search: Quick Search** command.
 
 Glob pattern examples:
+
 -   `*` to match zero or more characters in a path segment
 -   `?` to match on one character in a path segment
 -   `**` to match any number of path segments, including none

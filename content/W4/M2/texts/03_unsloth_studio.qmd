@@ -1,0 +1,293 @@
+---
+title: "Introducing Unsloth Studio"
+format: html
+---
+
+Today, we’re launching **Unsloth Studio** (Beta): an open-source, no-code web UI for training, running and exporting open models in one unified **local** interface.
+
+[Quickstart](#quickstart){.btn .btn-primary} [Features](#features){.btn .btn-secondary} [Github](https://github.com/unslothai/unsloth){.btn .btn-secondary}
+
+* **Run GGUF** and safetensor models locally on **Mac**, Windows, Linux.
+* Train 500+ models 2x faster with 70% less VRAM (no accuracy loss)
+* Run and train text, vision, TTS audio, embedding models
+
+::: {.callout-tip}
+**For all the latest updates, see our** [**new changelog page here**](https://unsloth.ai/docs/new/changelog)**!** ✨
+:::
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2FxV1PO5DbF3ksB51nE2Tw%2Fmore%20cropped%20ui%20for%20homepage.png?alt=media&#x26;token=f75942c9-3d8d-4b59-8ba2-1a4a38de1b86)
+
+* **MacOS** and **CPU** work for [Chat](#run-models-locally) GGUF inference and [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe). MLX training coming soon.
+* No dataset needed. [**Auto-create datasets**](https://unsloth.ai/docs/new/studio/data-recipe) from **PDF, CSV, JSON, DOCX, TXT** files.
+* [Export or save](https://unsloth.ai/docs/new/studio/export) your model to GGUF, 16-bit safetensor etc.
+* [**Self-healing tool calling**](https://unsloth.ai/docs/new/chat#auto-healing-tool-calling) / web search + [**code execution**](https://unsloth.ai/docs/new/chat#code-execution)
+* [Auto inference parameter](https://unsloth.ai/docs/new/chat#auto-parameter-tuning) tuning and edit chat templates.
+
+## ⭐ Features
+
+:::: {.columns}
+::: {.column width="50%"}
+### **Run models locally**
+
+[Search and run GGUF](https://unsloth.ai/docs/new/studio/chat) and safetensor models with [self-healing tool](https://unsloth.ai/docs/new/chat#auto-healing-tool-calling) calling / web search, [auto inference](https://unsloth.ai/docs/new/chat#auto-parameter-tuning) parameter tuning, [**code execution**](https://unsloth.ai/docs/new/chat#code-execution) (Bash + Python), APIs (very soon). Upload images, docs, audio, code.
+
+[Battle models side by side](#model-arena). Powered by llama.cpp + Hugging Face, we support **multi-GPU inference** and most models.
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2FFeQ0UUlnjXkDdqhcWglh%2Fskinny%20studio%20chat.png?alt=media&#x26;token=c2ee045f-c243-4024-a8e4-bb4dbe7bae79)
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### Execute code + heal Tool calling
+
+Unsloth Studio lets LLMs run Bash and Python, not just JavaScript. It also sandboxes programs like Claude Artifacts so models can test code, generate files, and verify answers with real computation.
+
+E.g. Qwen3.5-4B searched 20+ websites and cited sources, with web search happening inside its thinking trace.
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2FXPQGEEr1YoKofrTatAKK%2Ftoolcallingif.gif?alt=media&#x26;token=25d68698-fb13-4c46-99b2-d39fb025df08)
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### **No-code training**
+
+[Upload PDF, CSV, JSON](#data-recipes) docs, or YAML configs and start training instantly on NVIDIA. Unsloth’s kernels optimize LoRA, FP8, FFT, PT across 500+ text, vision, TTS/audio and embedding models.
+
+Fine-tune the latest LLMs like [Qwen3.5](https://unsloth.ai/docs/models/qwen3.5/fine-tune) and NVIDIA [Nemotron 3](https://unsloth.ai/docs/models/nemotron-3). [Multi-GPU](https://unsloth.ai/docs/basics/multi-gpu-training-with-unsloth) works automatically, with a new version coming.
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2FRjAfHShyL7MfHfq6BStl%2Fonboarding%20updated.png?alt=media&#x26;token=7cdde1a0-8f8c-4d25-9414-e28f35f211cd)
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### Data Recipes
+
+[**Data Recipes**](https://unsloth.ai/docs/new/studio/data-recipe) transforms your docs into useable / synthetic datasets via graph-node workflow. Upload unstructured or structured files like PDFs, CSV and JSON. Unsloth Data Recipes, powered by NVIDIA Nemo [Data Designer](https://github.com/NVIDIA-NeMo/DataDesigner), auto turns documents into your desired formats.
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2Fcc9T0V8WsyjcuOE2sIVV%2Fdata%20recipes%20longer.png?alt=media&#x26;token=5ae33e8d-09b1-45e0-8f5c-40dca8bbcf0c)
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### Observability
+
+Gain [complete visibility](https://unsloth.ai/docs/new/start#training-progress) into and control over your training runs. Track training loss, gradient norms, and GPU utilization in real time, and customize to your liking.
+
+You can even view the training progress on other devices like your phone.
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2FCIrWHN1JzfaFNOoavmZS%2Fobserve%20new.png?alt=media&#x26;token=21fdbc5b-a073-437a-b487-b5bdff4716f6)
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### Export / Save models
+
+[**Export any model**](https://unsloth.ai/docs/new/studio/export), including your fine-tuned models, to safetensors, or GGUF for use with llama.cpp, vLLM, Ollama, LM Studio, and more.
+
+Stores your training history, so you can revisit runs, export again and experiment.
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2F8UHzGTHF9q6LWrJy8Y4r%2FScreenshot%202026-03-15%20at%203.02.02%E2%80%AFAM.png?alt=media&#x26;token=cb5e78f8-481a-4c9f-9361-db53e6e0ec37)
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### Model Arena
+
+Chat with and [compare 2 different](https://unsloth.ai/docs/new/chat#model-arena) models, such as a base model and a fine-tuned one, to see how their outputs differ.
+
+Just load your first GGUF/model, then the second, and voilà! Inference will firstly load for one model, then the second one.
+:::
+::: {.column width="50%"}
+<div align="center">
+
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2FVgnE7eMPQk2vaFboJ4BU%2Fmodel%20arena%20closeup.png?alt=media&#x26;token=8b0a910b-440c-4859-a846-0060e61e157b)
+
+</div>
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+### Privacy first + Secure
+
+Unsloth Studio can be used 100% offline and locally on your computer. Its token-based authentication, including encrypted password and JWT access / refresh flows keeps your data secure.
+
+You can use pre-exisiting / old models or GGUFs that previously downloaded from HF etc. Read [instructions here](https://unsloth.ai/docs/new/chat#using-old-existing-gguf-models).
+:::
+::: {.column width="50%"}
+![](https://3215535692-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FxhOjnexMCB3dmuQFQ2Zq%2Fuploads%2F15gRLbMDX1ReKdHBBl1G%2FScreenshot%202026-03-15%20at%203.54.51%E2%80%AFAM.png?alt=media&#x26;token=ca096807-54c2-4d8c-bdc1-c1bb0055469b)
+:::
+::::
+
+::: {.callout-warning}
+Please note this is the **BETA** version of Unsloth Studio. Expect many improvements, fixes, and new features in the coming days and weeks.
+:::
+
+## ⚡ Quickstart
+
+Unsloth Studio works on Windows, Linux, WSL and MacOS (chat only currently).
+
+* **CPU:** Unsloth still works without a GPU, but only for [Chat](#run-models-locally) inference and [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe).
+* **Training:** Works on **NVIDIA**: RTX 30, 40, 50, Blackwell, DGX Spark/Station etc. + **Intel** GPUs
+* **Mac:** Like CPU - Chat and [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe) only works for now. **MLX** training coming very soon.
+* **AMD:** Chat works. Train with [Unsloth Core](https://unsloth.ai/docs/get-started/install/amd). Studio support is coming soon.
+* **Coming soon:** Training support for **Apple MLX** and **AMD.**
+* **Multi-GPU:** Works already, with a major upgrade on the way.
+
+Use the same install commands below to update:
+
+### **MacOS, Linux, WSL:**
+
+```bash
+curl -fsSL [https://unsloth.ai/install.sh](https://unsloth.ai/install.sh) | sh
+````
+
+### **Windows PowerShell:**
+
+```bash
+irm [https://unsloth.ai/install.ps1](https://unsloth.ai/install.ps1) | iex
+```
+
+#### Launch Unsloth
+
+```bash
+unsloth studio -H 0.0.0.0 -p 8888
+```
+
+### Docker:
+
+Use our official **Docker image**: [`unsloth/unsloth`](https://hub.docker.com/r/unsloth/unsloth) which currently works for Windows, WSL and Linux. MacOS support coming soon.
+
+```bash
+docker run -d -e JUPYTER_PASSWORD="mypassword" \
+  -p 8888:8888 -p 8000:8000 -p 2222:22 \
+  -v $(pwd)/work:/workspace/work \
+  --gpus all \
+  unsloth/unsloth
+```
+
+::: {.callout-tip}
+**First install should now be 6x faster and with 50% reduced size due to precompiled llama.cpp binaries.**
+:::
+
+**For more details about install and uninstallation please visit the** [**Unsloth Studio Install**](https://unsloth.ai/docs/new/studio/install) **section.**
+
+### Google Colab notebook
+
+We’ve created a [free Google Colab notebook](https://colab.research.google.com/github/unslothai/unsloth/blob/main/studio/Unsloth_Studio_Colab.ipynb) so you can explore all of Unsloth’s features on Colab’s T4 GPUs. You can train and run most models up to 22B parameters, and switch to a larger GPU for bigger models. Just Click 'Run all' and the UI should pop up after installation.
+
+:::: {.columns}
+::: {.column width="50%"}
+[Open Google Colab Notebook](https://colab.research.google.com/github/unslothai/unsloth/blob/main/studio/Unsloth_Studio_Colab.ipynb)
+
+Once installation is complete, scroll to **Start Unsloth Studio** and click **Open Unsloth Studio** in the white box shown on the left:
+
+**Scroll further down, to see the actual UI.**
+:::
+::: {.column width="50%"}
+:::
+::::
+
+::: {.callout-warning}
+We now precompile llama.cpp binaries for much faster install speeds.
+
+Sometimes the Studio link may return an error. This happens because you might be using an adblocker or Mozilla or Google Colab expects you to stay on the Colab page; if it detects inactivity, it may shut down the GPU session. Nevertheless, you can scroll down a bit.
+:::
+
+## 🌱 Workflow
+
+Here is a usual workflow of Unsloth Studio to get you started:
+
+1.  Launch Studio from [install instructions](https://unsloth.ai/docs/new/studio/install).
+2.  Load a model from local files or a supported integration.
+3.  Import training data from PDFs, CSVs, or JSONL files, or build a dataset from scratch.
+4.  Clean, refine, and expand your dataset in [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe).
+5.  Start training with recommended presets or customize the config yourself.
+6.  Chat with the trained model and compare its outputs against the base model.
+7.  [Save or export](https://www.google.com/search?q=%23export-save-models) locally to the stack you already use.
+
+You can read our individual deep dives into each section of Unsloth Studio:
+
+:::: {.columns}
+::: {.column width="50%"}
+
+  * [Start Guide](https://unsloth.ai/docs/new/studio/start)
+  * [Export Guide](https://unsloth.ai/docs/new/studio/export)
+    :::
+    ::: {.column width="50%"}
+  * [Data Recipe Guide](https://unsloth.ai/docs/new/studio/data-recipe)
+  * [Chat Guide](https://unsloth.ai/docs/new/studio/chat)
+    :::
+    ::::
+
+## 📹 Video Tutorials
+
+:::: {.columns}
+::: {.column width="50%"}
+Here is a video tutorial created by NVIDIA to get you started with Studio:
+{{\< video https://www.youtube.com/watch?v=mmbkP8NARH4 \>}}
+:::
+::: {.column width="50%"}
+How to Install Unsloth Studio Video Tutorial:
+{{\< video https://youtu.be/1lEDuRJWHh4?si=GHaS77ZZPOGjn3GJ \>}}
+:::
+::::
+
+## ❓ FAQ
+
+**Does Unsloth collect or store data?**
+Unsloth does not collect usage telemetry. Unsloth only collects the minimal hardware information required for compatibility, such as GPU type and device (e.g. Mac). Unsloth Studio runs 100% offline and locally.
+
+**How do I use an old / exisiting model that I downloaded previously from Hugging Face?**
+Yes, you can use pre-exisiting/old models or GGUFs that you previously downloaded from Hugging Face etc. They should be now be automatically detected by Unsloth otherwise read our [instructions here](https://unsloth.ai/docs/new/chat#using-old-existing-gguf-models).
+
+**Why is inference sometimes slower in Unsloth?**
+Unsloth, like other local inference apps, are powered by llama.cpp, so speeds should be mostly the same. Sometimes Unsloth might be because you turned on web-search, code execution, self-healing tool-calling on. All these features may make your inference slower. If the speed difference is still slower with all features turned off, please make a GitHub issue\!
+
+**Does Unsloth Studio support OpenAI-compatible APIs?**
+Yes, for our Data Recipes it does. For inference we are working on this and hope to release support for it as soon as this week so stay tuned\!
+
+**Is Unsloth now licensed under AGPL-3.0?**
+Unsloth uses a dual-licensing model of Apache 2.0 and AGPL-3.0. The core Unsloth package remains licensed under [**Apache 2.0**](https://github.com/unslothai/unsloth?tab=Apache-2.0-1-ov-file), while certain optional components, such as the Unsloth Studio UI are licensed [**AGPL-3.0**](https://github.com/unslothai/unsloth?tab=AGPL-3.0-2-ov-file).
+
+This structure helps support ongoing Unsloth development while keeping the project open source and enabling the broader ecosystem to continue growing.
+
+**Does Studio only support LLMs?**
+No. Studio supports a range of supported `transformers` compatible model families, including text, multimodal models, [text-to-speech](https://unsloth.ai/docs/basics/text-to-speech-tts-fine-tuning), audio, [embeddings](https://unsloth.ai/docs/basics/embedding-finetuning), and BERT-style models.
+
+**Can I use my own training config?**
+Yes. Import a YAML config and Studio will pre-fill the relevant settings.
+
+**How can I adjust my context length?**
+Context length adjustment is no longer necessary with llama.cpp’s smart auto context, which uses only the context you need without loading anything extra. However, soon we will still add the feature incase you want to use it.
+
+**Do you need to train models to use the UI?**
+No, you can just download any GGUF or model without fine-tuning any model.
+
+#### Future of Unsloth
+
+We're working hard to make open-source AI as accessible as possible. Coming next for Unsloth and Unsloth Studio, we're releasing official support for: multi-GPU, Apple Silicon/MLX and AMD. Reminder this is the BETA version of Unsloth Studio so expect a lot of announcements and improvements in the coming weeks. We’re also working closely with NVIDIA on multi-GPU support to deliver the best and simplest experience possible.
+
+#### Acknowledgements
+
+A huge thank you to NVIDIA and Hugging Face for being part of our launch. Also thanks to all of our early beta testers for Unsloth Studio, we truly appreciate your time and feedback. We’d also like to thank llama.cpp, PyTorch and open model labs for providing the infrastructure that made Unsloth Studio possible.
+
+{width=375px}
+
+---
+
+References:
+
+- https://unsloth.ai/docs/new/studio

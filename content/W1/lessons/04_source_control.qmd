@@ -148,7 +148,7 @@ git merge feature/new-header
 When we update the upstream, you can pull the changes.
 
 ::: {.incremental}
-1. Fork the GitHub repo [HassanAlgoz/python](https://github.com/HassanAlgoz/python/tree/main)
+1. Fork the GitHub repo [HassanAlgoz/B5](https://github.com/HassanAlgoz/B5/tree/main)
 2. Clone your own fork
 3. Setup the upstream (register another source for pulling changes from)
 4. Ask for the latest updates from that source.
@@ -164,7 +164,7 @@ When we update the upstream, you can pull the changes.
 Connect to the original repository (only needs to be done once):
 
 ```bash
-git remote add upstream https://github.com/HassanAlgoz/python.git
+git remote add upstream https://github.com/HassanAlgoz/B5.git
 ```
 
 Bring the latest changes into your local machine:
@@ -201,9 +201,11 @@ Learn to [Resolve merge conflicts in VS Code](https://code.visualstudio.com/docs
 
 :::: {.notes}
 This screenshot is meant to orient you to the Source Control view:
+
 - where you stage changes,
 - where commit messages are entered,
 - and how the diff editor helps you review what you are about to commit.
+
 Use this slide as your “map” before we split into the interface parts and workflows.
 ::::
 
@@ -251,8 +253,10 @@ Key interface elements:
 
 :::: {.notes}
 Look for the commit history graph:
+
 - it shows how commits relate to each other,
 - and it visualizes branch structure (where branches diverged and merged).
+
 When you’re unsure “what happened when”, this is usually the fastest place to look.
 ::::
 
@@ -262,8 +266,10 @@ When you’re unsure “what happened when”, this is usually the fastest place
 
 :::: {.notes}
 The diff editor is the “review tool”:
+
 - it shows what changed in a file (side-by-side),
 - so you can confirm the exact content before you commit.
+
 Treat this as a habit: review the diff first, then stage/commit.
 ::::
 
@@ -273,8 +279,10 @@ Treat this as a habit: review the diff first, then stage/commit.
 
 :::: {.notes}
 This image highlights Git-provided context inside the editor UI:
+
 - gutter indicators for changed lines,
 - and blame information (who last modified what).
+
 This helps you answer: “why is this line different?” without leaving VS Code.
 ::::
 
@@ -293,8 +301,10 @@ VS Code can also suggest AI-generated commit messages based on staged changes.
 
 :::: {.notes}
 Staging is how you choose “what becomes part of the next snapshot” (commit):
+
 - you can stage whole files or just specific parts,
 - then your commit message should describe what’s staged.
+
 Think of staging as building the exact package you want to commit.
 ::::
 
@@ -312,8 +322,10 @@ Think of staging as building the exact package you want to commit.
 
 :::: {.notes}
 Sync status helps you keep your local work aligned with the remote:
+
 - it shows what’s incoming (someone else’s commits),
 - and what’s outgoing (your commits waiting to be pushed).
+
 This is where you decide to fetch/pull/push next.
 ::::
 
@@ -323,8 +335,10 @@ This is where you decide to fetch/pull/push next.
 
 :::: {.notes}
 When automatic merging fails, you’ll resolve conflicts here:
+
 - the 3-way merge view shows “ours”, “theirs”, and the base,
 - so you can choose the correct pieces and produce a clean result.
+
 Goal: end with code that compiles/tests and matches the intended logic.
 ::::
 

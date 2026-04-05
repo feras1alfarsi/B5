@@ -38,13 +38,11 @@ Tentative schedule:
 
 ## Sessions and Break times
 
-- **Session 1**: 9:00 PM - 9:50 PM
+- **Session 1**: 9:00 PM - 10:30 PM
 - 10 minutes break
-- **Session 2**: 10:00 PM - 10:50 PM
-- 10 minutes break
-- **Session 3**: 11:00 PM - 12:00 PM
+- **Session 2**: 10:45 PM - 12:00 PM
 - Lunch break 12:00 - 1:00 PM
-- **Session 4 (Labs and Exercises)**: 1:00 - 3:00 PM
+- **Session 3 (Labs and Exercises)**: 1:00 - 3:00 PM
 
 ## Pedagogy
 
@@ -58,7 +56,7 @@ Tentative schedule:
 
 ## Submit your Work {#submit-your-work}
 
-Your GitHub repo is your **proof-of-work**. Open the repo [HassanAlgoz/python](https://github.com/HassanAlgoz/python/tree/main) then:
+Your GitHub repo is your **proof-of-work**. Open the repo [HassanAlgoz/B5](https://github.com/HassanAlgoz/B5/tree/main) then:
 
 ::: {.incremental}
 1. Fork it from the GitHub website

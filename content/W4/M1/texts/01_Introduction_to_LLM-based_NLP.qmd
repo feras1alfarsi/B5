@@ -1,0 +1,242 @@
+---
+title: "Introduction to LLM-based NLP"
+format: html
+---
+
+## What is NLP?
+
+NLP bridges the gap between computers and human language. It combines elements of:
+
+1. computer science, 
+2. linguistics, 
+3. artificial intelligence
+ 
+.. to enable machines to Understand (U) and Generate (G) language:
+
+## Natural Language Understanding
+
+**NLU**: Extract meaning, intention, emotion, importance, and correlation between words/texts/speech. Examples:
+
+- **Singular** Prediction: identify the underlying sentiment (positive/negative) or goal (e.g., "wants refund" or "needs to speak to human") expressed in a sentence or conversation.
+- **Sequence** Prediction: identify named entities in text, such as people, organizations, locations, dates, etc.
+- **Information Retrieval**: search engines.
+
+## Natural Language Generation
+
+**NLG**: language models able generate the most likely next word based on previous words, current conetxt, previous conversations, distributional semantics, and human-reinforced patterns of text.
+
+**Prediction** here, is the next word. But done repeatedly. Examples:
+
+- Question Answering based on FAQ
+- Paraphrasing and Translation and Summarization
+- Multi-turn Chatbots: mimics human conversations
+- Coding agents: mimics developer thoughts and actions (explicitly written be devs)
+
+## Common NLP Tasks
+
+### Sentiment Analysis
+
+The process of classifying the emotional intent of text. Generally, the input to a sentiment classification model is a piece of text, and the output is the probability that the sentiment expressed is positive, negative, or neutral.
+
+- **Toxicity classification** models can be used to moderate and improve online conversations by:
+    - silencing offensive comments (تعليقات مسيئة)
+    - detecting hate speech (خطاب كراهية)
+    - scanning documents for defamation (التشهير)
+- **Customer reviews classification** on various online platforms
+- **Identifying signs of mental illness** in online comments
+- **Spam detection** in emails and messages
+
+### Intent Classification
+
+- `"Hello, I want to get me a Laptop how much does it cost?"`
+    - Intent: `"BUY Laptop"`
+- `"I am very frustrated with your service, and I wanna cancel right now!"`
+    - Intent: `"CANCEL Subscription"`
+- `"Here I bought this Keyboard, but it is not working. I want to get my money back!"`
+    - Intent: `"REFUND Transaction"`
+
+### Named-entity Recognition (NER)
+
+**Named entity recognition (NER)** aims to extract entities in a piece of text into predefined categories such as: **personal names**, **organizations**, **locations**, and **quantities**.
+
+<img src="https://mohammedkhalilia.com/project/wojood/featured_hu3c39113436d8415af0ad7d87aac657cd_252396_720x2500_fit_q75_h2_lanczos.webp">
+
+### Information Extraction and Retrieval
+
+Search engines like Google, Bing, and Yahoo use NLP to understand user queries and return relevant results, after having crawled the web.
+
+### Machine Translation
+
+Automatically converting text from one language into another. This is a challenging task because languages have different grammatical structures, vocabularies, and idioms.
+
+- **Translating subtitles** for movies and TV shows
+- **Translating websites** into multiple languages
+- **Translating legal documents** for international business
+- **Translating medical records** for healthcare providers
+- **Translating scientific papers** for researchers
+- **Translating user manuals** for consumer
+- **Translating social media posts** for marketing
+
+### Text summarization
+
+The process of distilling the most important information from a piece of text into a shorter version. There are two main types of text summarization: **extractive** and **abstractive**.
+
+- **Extractive summarization** involves **selecting** the most important sentences or phrases from the original text and combining them to create a summary.
+  - think: "Google search".
+- **Abstractive summarization** involves **generating** new sentences that capture the essence of the original text.
+  - think: "ChatGPT"
+
+### Question Answering (QA)
+
+Generally, question-answering tasks come in two flavors:
+
+- **Multiple choice**: the learning task is to pick the correct answer.
+- **Open domain**: the model provides answers to questions in natural language without any options provided, often by querying a large number of texts.
+
+## Cross-modality Tasks
+
+- **Speech**:
+  - speech-to-text: transcribe audio
+  - text-to-speech: generate voice from text
+  - text+speech-to-speech: modiffy a given voice
+- **Image**:
+  - image-to-text: describe an image
+  - text-to-image: draw an image
+  - text+image-to-image: modify an image
+
+## Speech Recognition
+
+- **Voice assistants** like Siri, Alexa, and Google Assistant
+- **Transcription services** like Otter.ai and Rev
+- **Voice-controlled devices** like smart speakers and smart TVs
+- **Voice search** in search engines like Google and Bing
+- **Voice typing** in word processors like Google Docs and Microsoft Word
+- **Voice commands** in video games and virtual reality applications
+- **Voice biometrics** for security and authentication
+- **Closed captioning** for the hearing impaired
+- **Language translation** in real-time
+- **Transcription of phone calls** for customer service and sales
+- **Transcription of meetings** for note-taking and documentation
+- **Transcription of lectures** for students and researchers
+- **Transcription of podcasts** for SEO and accessibility
+- **Transcription of interviews** for journalists and researchers
+
+## Large Language Models
+
+While this course was originally focused on NLP (Natural Language Processing), it has evolved to emphasize Large Language Models (LLMs), which represent the latest advancement in the field. 
+
+**What's the difference?**
+
+- **NLP (Natural Language Processing)** is the broader field focused on enabling computers to understand, interpret, and generate human language. NLP encompasses many techniques and tasks such as sentiment analysis, named entity recognition, and machine translation.
+- **LLMs (Large Language Models)** are a powerful subset of NLP models characterized by their massive size, extensive training data, and ability to perform a wide range of language tasks with minimal task-specific training. Models like the Llama, GPT, or Claude series are examples of LLMs that have revolutionized what's possible in NLP.
+
+## Why is language processing challenging?
+
+Computers don't process information in the same way as humans. For example, when we read the sentence "I am hungry," we can easily understand its meaning. Similarly, given two sentences such as "I am hungry" and "I am sad," we're able to easily determine how similar they are. For machine learning (ML) models, such tasks are more difficult. The text needs to be processed in a way that enables the model to learn from it. And because language is complex, we need to think carefully about how this processing must be done. There has been a lot of research done on how to represent text, and we will look at some methods in the next chapter.
+
+Even with the advances in LLMs, many fundamental challenges remain. These include understanding ambiguity, cultural context, sarcasm, and humor. LLMs address these challenges through massive training on diverse datasets, but still often fall short of human-level understanding in many complex scenarios.
+
+### Ambiguity (الغموض)
+
+#### Lexical ambiguity
+
+**Lexical ambiguity** is a subtype of semantic ambiguity where a word or morpheme is ambiguous.
+- "The fisherman went to the bank"
+  - "bank" could either mean "river bank" or the "bank building"
+- "شربت من العين" (نبع الماء).
+- "أبصرت بـ العين" (عضو البصر).
+- "أرسل القائد عيناً لاستطلاع العدو" (جاسوساً).
+- "اشتريت هذا بعينه" (بذاته/نفسه).
+
+#### Homonymy
+
+**Homonymy** (التجانس اللفظي) happens when words are pronounced the same way.
+- "this is a row of raw materials"
+- "I see the sea"
+- "Without my glasses I can't see the glass"
+- مثال (كلمة "ذهَب"):
+  - "خاتم من ذَهَب" (المعدن النفيس).
+  - "ذَهَبَ محمد إلى المدرسة" (فعل ماضٍ بمعنى مشى/غادر).
+
+#### Semantic ambiguity
+
+**Semantic ambiguity** (الغموض الدلالي) results from expressions having multiple meanings.
+- "It’s on the house." -- could mean something is free, or an object could literally be found on the house.
+- "that went over my head" -- could express confusion or that something literally passed over their head
+- "not your business"
+- مثال: "طارت الطيور بأرزاقها"
+  - المعنى الحرفي: الطيور أخذت الطعام وطارت.
+  - المعنى المقصود: فات الأوان وانتهت الفرصة.
+
+#### Syntactic Ambiguity
+
+**Syntactic Ambiguity** happens when the sentence has multiple parse trees.
+
+- "I saw the man on the beach with my binoculars." -- could mean that I saw a man through my binoculars or the man had my binoculars with him.
+
+Reference: https://cs.nyu.edu/~davise/ai/ambiguity.html
+
+#### Irony and sarcasm
+
+Any time you say the opposite of the truth intentionally for effect, that’s verbal irony.
+
+Sarcasm:
+
+- "I love it when my computer crashes."
+- "Oh, fantastic! I just love waiting in line for hours."
+- عندما يرتكب شخص خطأ فادحاً فتقول له: "ما شاء الله، عبقري!"
+
+Irony:
+
+- Verbal: "جيتك يا عبد المعين تعين لقيتك يا عبد المعين تنعان"
+- Situational:
+  - A Doctor that smokes cigarettes.
+  - "باب النجار مخلّع"
+
+Irony and sarcasm present problems for machine learning models because they generally use words and phrases that, strictly by definition, may be positive or negative, but actually connote the opposite.
+
+#### Dialects
+
+Dialects are variations of a language spoken in different regions or by different social groups. For example, American English and British English have different spellings, pronunciations, and vocabulary.
+
+- Water and "Wadder"
+- "Ain't no thang" vs. "It's no problem": This phrase is common in some dialects of American English, but it might be unfamiliar to others.
+- "Y'all" vs. "you guys": This is a regional difference in addressing a group of people, with "y'all" being more common in the Southern United States.
+
+اختلاف المفردات (مثال: "كيف حالك؟"):
+- الفصحى: كيف حالك؟
+- الخليجية: شلونك؟ / شعلومك؟
+- المصرية: إزيك؟ / عامل إيه؟
+- الشامية: كيفك؟
+- المغربية: كيداير؟ / لباس؟
+
+أدوات النفي (مثال: "ما أكلت"):
+- المصرية/الشامية: ما اكلتش / ما اكلت.
+- الخليجية: ما كليت / مو ماكل.
+- المغربية: ما كليتش.
+
+#### Slang and jargon
+
+Slang and jargon are informal words and phrases used in specific contexts or by particular groups of people. They can be difficult for machines to understand because they are constantly evolving and can have multiple meanings. Examples:
+- "That movie was lit!" (meaning: the movie was excellent)
+- "I'm feeling blue." (meaning: I'm feeling sad)
+- "Google it!"
+
+- "كبّر دماغك": تعني تجاهل الأمر (وليست دعوة طبية لتكبير الرأس).
+- "سحَب عليه": (السعودية/الخليج) تعني تجاهله أو لم يذهب لموعده.
+- "قصف جبهته": تعني أحرجه برد قوي ومفحم.
+
+Jargon:
+- "ROI" (return on investment)
+- "KPI" (key performance indicator)
+- "ML" (machine learning)
+
+## Learning Objectives
+
+Throughout this course, you'll learn about both traditional NLP concepts and cutting-edge LLM techniques, as understanding the foundations of NLP is crucial for working effectively with LLMs.
+
+In this chapter, you will learn:
+
+* How to use the `pipeline()` function to solve NLP tasks such as text generation and classification
+* About the Transformer architecture
+* How to distinguish between encoder, decoder, and encoder-decoder architectures and use cases

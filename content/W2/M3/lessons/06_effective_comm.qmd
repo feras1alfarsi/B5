@@ -1,0 +1,206 @@
+---
+title: "Effective communication of exploratory results"
+format:
+  revealjs:
+    incremental: false
+    slide-level: 2
+---
+
+## Why this matters
+
+Graphs communicate ideas quickly—but images can also mislead.
+
+This deck covers **best practices** for presenting data accurately and clearly. Visualization has room for creativity, yet solid principles still apply.
+
+::: {.notes}
+
+Open with the tension: a picture *can* be worth a thousand words, but it can also lie or mislead. The goal of this session is not to kill creativity—visualization is partly an art—but to give you **guiding principles** so your exploratory graphics present data **accurately** and **effectively**. Everything that follows supports that single aim.
+
+:::
+
+## What's wrong with this plot?
+
+![](../../assets/bad_example_height_per_country.png){.r-stretch}
+
+::: {.notes}
+
+Pause on the image before you explain. Ask the room what feels off—scale, encoding, comparison, or story. You are priming them for the principles ahead: we will return to *why* bad choices happen (defaults, decoration, wrong chart type) as we go through each section. Keep this slide short; the next slides name the fixes.
+
+:::
+
+## 1. Keep it simple
+
+Decide what you want the reader to see. Use **color** to group or differentiate levels meaningfully—not only to brighten the plot.
+
+Pie slices are hard to compare; arbitrary colors distract; 3D rarely helps. A **bar chart** usually makes category magnitudes easier to read, especially with more than a few levels.
+
+![](../../assets/viz_1.png){.r-stretch}
+
+::: {.notes}
+
+Use the classic **manufacturing cost** example mentally: five cost categories. On the pie, ask aloud whether your eye can really compare “Buildings and administration” to “Workplace materials”—slice angles are poor for magnitude. Call out **three** problems: hard comparisons, **meaningless** rainbow-like colors, and **3D** that adds no insight. Then contrast with the bar chart: same categories, but length is easy to judge. Emphasize the rule: for more than a few categories, **bars usually beat pies** for reading values.
+
+:::
+
+## 2. Use color to draw attention
+
+Add color **on purpose**: draw attention to what matters, and question defaults (e.g., do red and purple bars imply a relationship?).
+
+Not everyone perceives color the same way—pair color with another cue (e.g., pattern) when you need to refer to highlighted elements in more than one way.
+
+![](../../assets/viz_2.png){.r-stretch}
+
+::: {.notes}
+
+Beauty is fine, but **defaults are a decision**—often a bad one. Walk through (a) vs (b): in (b), color *points* to one message; in (a), redundant hues make viewers wonder if red and purple “mean” something related. Mention **accessibility**: color vision varies; panel (c) shows pairing **color with pattern** so you can refer to the highlighted category in two ways. This is a good place to say “if you only remember one thing about color: use it to **direct attention**, not to decorate.”
+
+:::
+
+## 3. Tell a story
+
+Often the plot should include **context** that is not in the raw table—annotations, reference lines, or events that frame the narrative.
+
+Example: mark the start of a fiscal year. A diagonal line \(y = x\) can separate points where one coordinate exceeds the other.
+
+![](../../assets/viz_3.png){.r-stretch}
+
+::: {.notes}
+
+The dataset rarely contains the whole story. **External information**—policy dates, fiscal year starts, experimental conditions—belongs on the plot when it explains *why* the series looks the way it does. The text’s example: annotating the **start of the university fiscal year**. For scatterplots, a **\(y = x\)** line is standard: above the line, one variable exceeds the other; below, the reverse. That line is “context” encoded as geometry. Encourage students to ask: “What would a domain expert need to see that isn’t in the CSV?”
+
+:::
+
+## 4. Order matters
+
+Software may order categories alphabetically by default—that is not always meaningful.
+
+Consider **ordering by magnitude** or by the **natural sequence** of the question (e.g., survey response order). A misleading order can fool a quick scan of the axes.
+
+::: {.notes}
+
+Most tools **alphabetize** or use arbitrary order unless you override. Explain that **alphabetical** order is often meaningless for opinion or severity scales—readers skim the axis and infer a trend that isn’t there. Offer two better options: **sort by count** (tallest to shortest) when the story is “who is biggest,” and **survey or logical order** when the scale itself is ordinal (e.g., “very well” through “very badly”). Stress: **wrong order misleads** even when the numbers are correct. The next slide gives a real survey where question order is the right order.
+
+:::
+
+## Brexit opinion (YouGov, Sept 2019)
+
+Survey of 1,639 adults in Great Britain: [How well or badly do you think the government are doing at handling Britain’s exit from the European Union?](https://d25d2506sfb94s.cloudfront.net/cumulus_uploads/document/x0msmggx08/YouGov%20-%20Brexit%20and%202019%20election.pdf)
+
+- Very well  
+- Fairly well  
+- Fairly badly  
+- Very badly  
+- Don’t know  
+
+![](../../assets/viz_4.png){.r-stretch}
+
+::: {.notes}
+
+**YouGov, September 2019**, *n* = 1,639 Great Britain adults—link is on the slide for anyone who wants the PDF. The question wording matters; the **response options** have a natural order from positive to negative (plus “Don’t know”). That is why **alphabetical** bar order fails here: the *right* order follows how the question was asked, as in the figure. Connect back to the previous slide: this is the “Figure 6.4” story in the book—(a) alphabetical, (b) by height, (c) by survey order. Walk the audience through what each ordering emphasizes before they stare at `viz_4`.
+
+:::
+
+## 5. Make labels easy to read
+
+Same numbers, different layout: **horizontal bars** often leave more room for category labels than vertical bars.
+
+Clear labels → more learning from the chart. Aim for **succinct, readable** text.
+
+![](../../assets/viz_5.png){.r-stretch}
+
+::: {.notes}
+
+This continues the Brexit theme: results **by region** in stacked bars. (a) vertical vs (b) horizontal—the **values are identical**; only layout changes. Horizontal bars buy space for **long region names** on the axis. Repeat the mantra: the easier the labels, the more the reader actually reads. If something is hard to read, they skip it and your chart under-delivers. Tie to the chapter goal: **maximum information, clearly**, not maximum ink.
+
+:::
+
+## 6. Pick a purpose
+
+Every graphical choice should serve the **research question**. Defaults are not always the right story.
+
+Stacked bars emphasize one kind of comparison; **faceting** or alternative encodings may fit another. Use informative labels, titles, and sources when you can.
+
+![](../../assets/viz_6-1.png){.r-stretch}
+
+::: {.notes}
+
+**Stacked bars** answer “what is the composition within each group?”—not always the question you care about. Same data, three stories: (a) if **proportions across regions** are the headline, stacked or normalized views help. (b) if **counts** matter—not just shares—show totals or axes that preserve magnitude. (c) **faceting**—one small multiple per region—when you want readers to compare distributions *within* region without stacking confusion. Mention that good figures also carry **titles and a data source URL**; the book highlights that on (c). Preview the next slide: more variants of the same idea.
+
+:::
+
+## Same data, different emphasis
+
+![](../../assets/viz_6-2.png){.r-stretch}
+
+::: {.notes}
+
+Briefly contrast this panel with the previous: reinforce that **encoding choice = editorial choice**. Ask: “For *your* analysis, is the story about share, about total \(N\), or about per-region detail?” There is no single “correct” chart—only a chart that matches the **question**. Remind them to strip **redundant** ink and to label what matters.
+
+:::
+
+## 7. Select meaningful colors
+
+Avoid rainbow defaults when they do not match your variable. Choose palettes that are **distinct** and work for **color-vision diversity** (e.g., **cividis** for ordinal data—[Nuñez, Anderton, and Renslow 2018](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0199239)).
+
+![](../../assets/viz_7.png){.r-stretch}
+
+::: {.notes}
+
+**Rainbow** scales are popular in defaults but often **perceptually uneven**—equal steps in data don’t look equal in hue. Research-backed palettes (the slide mentions **cividis** for ordinal data) aim for **discriminability** and **robustness** across common forms of color-vision deficiency. Same plot, two themes: let the audience see how “prettier” is not the same as “more informative.” Point to the paper if someone teaches or publishes in this space.
+
+:::
+
+## Takeaway
+
+Your graph should carry **maximum information** in minimum ink: clear labels (often horizontal), strong titles, and **data source** when possible.
+
+::: {.notes}
+
+One-sentence synthesis of the chapter: **maximal information, succinctly and clearly**—Tufte’s spirit without naming him if you prefer. **Horizontal labels** when you can, **titles** that state the claim, and **sources** so the figure is trustworthy. This is a good moment to loop back to the opening “bad plot”: ask which principles it violated. End upbeat: these habits become automatic with practice.
+
+:::
+
+## Quantitative perception
+
+How do we **perceive** quantities from visual properties of a chart?
+
+![](../../assets/perception.png){.r-stretch}
+
+::: {.notes}
+
+Transition from “what to draw” to “how humans read marks.” The perception figure summarizes **which encodings** we judge well (position along a common scale) vs poorly (area, angle, hue without order). Use this slide to justify why bar length beats pie angle, and why careful color matters. Keep it high level here; the next slide sends them to deeper resources.
+
+:::
+
+## More on perception and encoding
+
+- Slide deck: [Data Visualization Best Practices — Catherine Mulbrandon](https://speakerdeck.com/cmulbrandon/methods-for-visualizing-economics)  
+- Plot building blocks: [Plot properties — Seaborn](https://seaborn.pydata.org/tutorial/properties.html) (color, style, size, text)
+
+::: {.notes}
+
+**Mulbrandon’s** deck is an excellent follow-up for economics-style communication. **Seaborn’s “Plot properties”** tutorial is practical for implementation: how library defaults map to **color, style, size, and text**—good for lab work after this lecture. Encourage bookmarking rather than reading live.
+
+:::
+
+## Color scheme tools
+
+- [ColorBrewer 2.0](http://colorbrewer2.org)  
+- [Coolors](https://coolors.co/)
+
+::: {.notes}
+
+**ColorBrewer** is the classic tool for **map- and chart-ready** palettes with accessibility in mind. **Coolors** helps when you need to explore combinations quickly—still check contrast and color-blind simulation before finalizing. These are for *after* you know your data type (qualitative vs sequential vs diverging).
+
+:::
+
+## References
+
+- [OpenIntro: Introduction to Modern Statistics](https://openintro-ims.netlify.app/explore-applications)  
+- [CS109A | Harvard — Visualization lecture](https://harvard-iacs.github.io/2021-CS109A/lectures/lecture12/presentation/Lecture12_Visualization_2021.pdf)
+
+::: {.notes}
+
+Credit the **OpenIntro** material this chapter draws from, and **Harvard CS109A** for a full lecture treatment of visualization if students want alternate explanations and examples. Close the session; invite questions.
+
+:::
