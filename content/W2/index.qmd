@@ -18,13 +18,13 @@ Learning outcomes:
 Lessons and labs:
 
 1. [Introduction to Data Science Processes and Roles](./M1/lessons/01_slides_intro.qmd)
-2. [Lab 1: Confirmatory Data Analysis (CDA)- blind typing experiment](./M1/lessons/02_lab_cda_blind_typing.ipynb)
-3. [Lab 2: Exploratory Data Analysis (EDA)- US Census 2010-2019](./M1/lessons/03_lab_eda_census.ipynb)
+2. [Lab 1: Confirmatory Data Analysis (CDA)- blind typing experiment](./M1/lessons/02_lab_cda_blind_typing.ipynb) (15m read)
+3. [Lab 2: Exploratory Data Analysis (EDA)- US Census 2010-2019](./M1/lessons/03_lab_eda_census.ipynb) (30m read)
 
 #### Exercises
 
 1. [John Snow](./M1/exercises/john_snow.qmd) (3 questions)
-2. [M1 Exercise Quiz](./M1/exercises/m1_exercise_quiz_1.md) (20 questions) - **load into NotebookLM or Gemini**
+2. [Review Quiz NotebookLM](https://notebooklm.google.com/notebook/8e9ff4ca-2054-48d5-b0d3-120db7d965f8?artifactId=f7631507-8fba-427b-991b-962a13bad964) (10 questions)
 
 ## Module 2: Data Wrangling
 
@@ -44,6 +44,8 @@ Lessons and labs:
 2. [Lab: Pandas Summary Statistics](./M2/lessons/02_pd_agg.ipynb)
 3. [Lab: Pandas Function application](./M2/lessons/03_pd_function_application.ipynb)
 4. [Lab: Bike Sharing](./M2/lessons/04_lab_bike_sharing.ipynb)
+5. [Lab: Pandas Pivot and Melt (Reshaping)](./M2/lessons/05_pd_reshape.ipynb)
+6. [Lab: Pandas Timeseries Data](./M2/lessons/06_pd_timeseries.ipynb)
 
 #### Exercises
 
