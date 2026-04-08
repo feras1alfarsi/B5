@@ -1,44 +1,9 @@
 ---
-title: "Transformer Models"
+title: "Transformer Architectures"
 format: html
 ---
 
-## Transfer Learning
-
-**Pretraining** is the act of training a model from scratch: the weights are randomly initialized, and the training starts without any prior knowledge.
-
-This pretraining is usually done on very large amounts of data. Therefore, it requires a very large corpus of data, and training can take up to several weeks.
-
-**Fine-tuning**, on the other hand, is the training done **after** a model has been pretrained. To perform fine-tuning, you first acquire a pretrained language model, then perform additional training with a dataset specific to your task. 
-
-Wait -- why not simply train the model for your final use case from the start (**scratch**)? There are a couple of reasons:
-
-*  The pretrained model was already trained on a dataset that has some similarities with the fine-tuning dataset. The fine-tuning process is thus able to take advantage of knowledge acquired by the initial model during pretraining. 
-*  Since the pretrained model was already trained on lots of data, the fine-tuning requires way less data to get decent results.
-*  For the same reason, the amount of time and resources needed to get good results are much lower.
-
-Fine-tuning a model therefore has lower time, data, financial, and environmental costs. It is also quicker and easier to iterate over different fine-tuning schemes.
-
-## Architectures vs. checkpoints
-
-As we dive into Transformer models in this course, you'll see mentions of *architectures* and *checkpoints* as well as *models*. These terms all have slightly different meanings: 
-
-* **Architecture**: This is the skeleton of the model -- the definition of each layer and each operation that happens within the model. 
-* **Checkpoints**: These are the weights that will be loaded in a given architecture.
-* **Model**: This is an umbrella term that isn't as precise as "architecture" or "checkpoint": it can mean both. This course will specify *architecture* or *checkpoint* when it matters to reduce ambiguity.
-
-For example, BERT is an architecture while `bert-base-cased`, a set of weights trained by the Google team for the first release of BERT, is a checkpoint. However, one can say "the BERT model" and "the `bert-base-cased` model."
-
-# Transformer Architectures {#transformer-architectures}
-
-In the previous sections, we introduced the general Transformer architecture and explored how these models can solve various tasks. Now, let's take a closer look at the three main architectural variants of Transformer models and understand when to use each one. Then, we look at how those architectures are applied to different language tasks. 
-
-In this section, we're going to dive deeper into the three main architectural variants of Transformer models and understand when to use each one.
-
-
-::: {.callout-tip}
-Remember that most Transformer models use one of three architectures: encoder-only, decoder-only, or encoder-decoder (sequence-to-sequence). Understanding these differences will help you choose the right model for your specific task.
-:::
+Most Transformer models use one of three architectures: encoder-only, decoder-only, or encoder-decoder (sequence-to-sequence). Understanding these differences will help you choose the right model for your specific task.
 
 ## Encoder models {#encoder-models}
 
@@ -51,7 +16,7 @@ The pretraining of these models usually revolves around somehow corrupting a giv
 Encoder models are best suited for tasks requiring an understanding of the full sentence, such as sentence classification, named entity recognition (and more generally word classification), and extractive question answering.
 
 ::: {.callout-tip}
-As we saw in [How 🤗 Transformers solve tasks](https://huggingface.co/learn/llm-course/chapter1/5), encoder models like BERT excel at understanding text because they can look at the entire context in both directions. This makes them perfect for tasks where comprehension of the whole input is important.
+Encoder models like BERT excel at understanding text because they can look at the entire context in both directions. This makes them perfect for tasks where comprehension of the whole input is important.
 :::
 
 Representatives of this family of models include:
@@ -71,7 +36,7 @@ The pretraining of decoder models usually revolves around predicting the next wo
 These models are best suited for tasks involving text generation.
 
 ::: {.callout-tip}
-Decoder models like GPT are designed to generate text by predicting one token at a time. As we explored in [How 🤗 Transformers solve tasks](https://huggingface.co/learn/llm-course/chapter1/5), they can only see previous tokens, which makes them excellent for creative text generation but less ideal for tasks requiring bidirectional understanding.
+Decoder models like GPT are designed to generate text by predicting one token at a time. They can only see previous tokens, which makes them excellent for creative text generation but less ideal for tasks requiring bidirectional understanding.
 :::
 
 Representatives of this family of models include:
@@ -86,6 +51,7 @@ Representatives of this family of models include:
 Most modern Large Language Models (LLMs) use the decoder-only architecture. These models have grown dramatically in size and capabilities over the past few years, with some of the largest models containing hundreds of billions of parameters.
 
 Modern LLMs are typically trained in two phases:
+
 1. **Pretraining**: The model learns to predict the next token on vast amounts of text data
 2. **Instruction tuning**: The model is fine-tuned to follow instructions and generate helpful responses
 
@@ -123,7 +89,7 @@ The pretraining of these models can take different forms, but it often involves 
 Sequence-to-sequence models are best suited for tasks revolving around generating new sentences depending on a given input, such as summarization, translation, or generative question answering.
 
 ::: {.callout-tip}
-As we saw in [How 🤗 Transformers solve tasks](https://huggingface.co/learn/llm-course/chapter1/5), encoder-decoder models like BART and T5 combine the strengths of both architectures. The encoder provides deep bidirectional understanding of the input, while the decoder generates appropriate output text. This makes them perfect for tasks that transform one sequence into another, like translation or summarization.
+Encoder-decoder models like BART and T5 combine the strengths of both architectures. The encoder provides deep bidirectional understanding of the input, while the decoder generates appropriate output text. This makes them perfect for tasks that transform one sequence into another, like translation or summarization.
 ::: 
 
 ### Practical applications
@@ -178,54 +144,6 @@ When in doubt about which model to use, consider:
 
 The answers to these questions will guide you toward the right architecture. 
 :::
-
-## The evolution of LLMs
-
-Large Language Models have evolved rapidly in recent years, with each generation bringing significant improvements in capabilities. 
-
-## Attention mechanisms {#attention-mechanisms}
-
-Most transformer models use full attention in the sense that the attention matrix is square. It can be a big
-computational bottleneck when you have long texts. Longformer and reformer are models that try to be more efficient and
-use a sparse version of the attention matrix to speed up training.
-
-::: {.callout-tip}
-Standard attention mechanisms have a computational complexity of O(n²), where n is the sequence length. This becomes problematic for very long sequences. The specialized attention mechanisms below help address this limitation.
-:::
-
-### LSH attention
-
-[Reformer](https://huggingface.co/docs/transformers/model_doc/reformer) uses LSH attention. In the softmax(QK^t), only the biggest elements (in the softmax dimension) of the matrix QK^t are going to give useful contributions. So for each query q in Q, we can consider only
-the keys k in K that are close to q. A hash function is used to determine if q and k are close. The attention mask is
-modified to mask the current token (except at the first position), because it will give a query and a key equal (so
-very similar to each other). Since the hash can be a bit random, several hash functions are used in practice
-(determined by a n_rounds parameter) and then are averaged together.
-
-### Local attention
-
-[Longformer](https://huggingface.co/docs/transformers/model_doc/longformer) uses local attention: often, the local context (e.g., what are the two tokens to the  left and right?) is enough to take action for a given token. Also, by stacking attention layers that have a small
-window, the last layer will have a receptive field of more than just the tokens in the window, allowing them to build a
-representation of the whole sentence.
-
-Some preselected input tokens are also given global attention: for those few tokens, the attention matrix can access
-all tokens and this process is symmetric: all other tokens have access to those specific tokens (on top of the ones in
-their local window). This is shown in Figure 2d of the paper, see below for a sample attention mask:
-
-![](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/local_attention_mask.png){fig-align="center" width="50%"}
-
-Using those attention matrices with less parameters then allows the model to have inputs having a bigger sequence
-length.
-
-### Axial positional encodings
-
-[Reformer](https://huggingface.co/docs/transformers/model_doc/reformer) uses axial positional encodings: in traditional transformer models, the positional encoding
-E is a matrix of size $l$ by $d$, $l$ being the sequence length and $d$ the dimension of the
-hidden state. If you have very long texts, this matrix can be huge and take way too much space on the GPU. To alleviate
-that, axial positional encodings consist of factorizing that big matrix E in two smaller matrices E1 and E2, with
-dimensions $l_{1} \times d_{1}$ and $l_{2} \times d_{2}$, such that $l_{1} \times l_{2} = l$ and
-$d_{1} + d_{2} = d$ (with the product for the lengths, this ends up being way smaller). The embedding for time
-step $j$ in E is obtained by concatenating the embeddings for timestep $j \% l1$ in E1 and $j // l1$
-in E2.
 
 ## Conclusion {#conclusion}
 

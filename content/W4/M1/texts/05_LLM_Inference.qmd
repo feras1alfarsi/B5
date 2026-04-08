@@ -162,6 +162,36 @@ This approach often produces more coherent and grammatically correct text, thoug
 
 As we wrap up our exploration of LLM inference, let's look at the practical challenges you'll face when deploying these models, and how to measure and optimize their performance.
 
+
+### Statistical Artifacts: Bias
+
+If your intent is to use a pretrained model or a fine-tuned version in production, please be aware that, while these models are powerful tools, they come with limitations. The biggest of these is that, to enable pretraining on large amounts of data, researchers often scrape all the content they can find, taking the best as well as the worst of what is available on the internet. 
+
+To give a quick illustration, let's go back to the example of a `fill-mask` pipeline with the BERT model:
+
+```python
+from transformers import pipeline
+
+unmasker = pipeline("fill-mask", model="bert-base-uncased")
+result = unmasker("This man works as a [MASK].")
+print([r["token_str"] for r in result])
+
+result = unmasker("This woman works as a [MASK].")
+print([r["token_str"] for r in result])
+```
+
+Running the above code gives the following outputs:
+
+```python out
+['lawyer', 'carpenter', 'doctor', 'waiter', 'mechanic']
+['nurse', 'waitress', 'teacher', 'maid', 'prostitute']
+```
+
+When asked to fill in the missing word in these two sentences, the model gives only one gender-free answer (waiter/waitress). The others are work occupations usually associated with one specific gender. This happens even though BERT is one of the rare Transformer models not built by scraping data from all over the internet, but rather using apparently neutral data (it's trained on the English Wikipedia and BookCorpus datasets). 
+
+When you use these tools, you therefore need to keep in the back of your mind that the original model you are using could very easily generate sexist, racist, or homophobic content. Fine-tuning the model on your data won't make this intrinsic bias disappear.
+
+
 ### Key Performance Metrics
 
 When working with LLMs, four critical metrics will shape your implementation decisions:
@@ -189,34 +219,6 @@ To address these challenges, one of the most powerful optimizations is KV (Key-V
 - Makes long-context generation practical
 
 The trade-off is additional memory usage, but the performance benefits usually far outweigh this cost.
-
-## Bias
-
-If your intent is to use a pretrained model or a fine-tuned version in production, please be aware that, while these models are powerful tools, they come with limitations. The biggest of these is that, to enable pretraining on large amounts of data, researchers often scrape all the content they can find, taking the best as well as the worst of what is available on the internet. 
-
-To give a quick illustration, let's go back to the example of a `fill-mask` pipeline with the BERT model:
-
-```python
-from transformers import pipeline
-
-unmasker = pipeline("fill-mask", model="bert-base-uncased")
-result = unmasker("This man works as a [MASK].")
-print([r["token_str"] for r in result])
-
-result = unmasker("This woman works as a [MASK].")
-print([r["token_str"] for r in result])
-```
-
-Running the above code gives the following outputs:
-
-```python out
-['lawyer', 'carpenter', 'doctor', 'waiter', 'mechanic']
-['nurse', 'waitress', 'teacher', 'maid', 'prostitute']
-```
-
-When asked to fill in the missing word in these two sentences, the model gives only one gender-free answer (waiter/waitress). The others are work occupations usually associated with one specific gender. This happens even though BERT is one of the rare Transformer models not built by scraping data from all over the internet, but rather using apparently neutral data (it's trained on the English Wikipedia and BookCorpus datasets). 
-
-When you use these tools, you therefore need to keep in the back of your mind that the original model you are using could very easily generate sexist, racist, or homophobic content. Fine-tuning the model on your data won't make this intrinsic bias disappear.
 
 ## Conclusion
 

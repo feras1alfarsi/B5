@@ -1,0 +1,38 @@
+---
+title: Fine-tuning
+format: revealjs
+---
+
+
+## Transfer Learning
+
+**Pretraining** is the act of training a model from scratch: the weights are randomly initialized, and the training starts without any prior knowledge.
+
+This pretraining is usually done on very large amounts of data. Therefore, it requires a very large corpus of data, and training can take up to several weeks.
+
+**Fine-tuning**, on the other hand, is the training done **after** a model has been pretrained. To perform fine-tuning, you first acquire a pretrained language model, then perform additional training with a dataset specific to your task. 
+
+Wait -- why not simply train the model for your final use case from the start (**scratch**)? There are a couple of reasons:
+
+*  The pretrained model was already trained on a dataset that has some similarities with the fine-tuning dataset. The fine-tuning process is thus able to take advantage of knowledge acquired by the initial model during pretraining. 
+*  Since the pretrained model was already trained on lots of data, the fine-tuning requires way less data to get decent results.
+*  For the same reason, the amount of time and resources needed to get good results are much lower.
+
+Fine-tuning a model therefore has lower time, data, financial, and environmental costs. It is also quicker and easier to iterate over different fine-tuning schemes.
+
+## Architectures vs. checkpoints
+
+As we dive into Transformer models in this course, you'll see mentions of *architectures* and *checkpoints* as well as *models*. These terms all have slightly different meanings: 
+
+* **Architecture**: This is the skeleton of the model -- the definition of each layer and each operation that happens within the model. 
+* **Checkpoints**: These are the weights that will be loaded in a given architecture.
+* **Model**: This is an umbrella term that isn't as precise as "architecture" or "checkpoint": it can mean both. This course will specify *architecture* or *checkpoint* when it matters to reduce ambiguity.
+
+For example, BERT is an architecture while `bert-base-cased`, a set of weights trained by the Google team for the first release of BERT, is a checkpoint. However, one can say "the BERT model" and "the `bert-base-cased` model."
+
+
+## Task Recipes
+
+![](../assets/resources_task_recipes.png){fig-align="center" .r-stretch}
+
+Example task: [ASR](https://huggingface.co/docs/transformers/tasks/asr).

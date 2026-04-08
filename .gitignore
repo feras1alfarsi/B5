@@ -19,3 +19,7 @@ _site/
 _freeze/
 .jupyter_cache/
 site_libs/
+content/W2/uv.lock
+content/W2/M1/lessons/eur.ipynb
+content/W2/M1/lessons/scratch.ipynb
+content/W2/uv.lock

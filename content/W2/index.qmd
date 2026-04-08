@@ -41,11 +41,11 @@ Learning outcomes:
 Lessons and labs:
 
 1. [Lab: Pandas Essentials](./M2/lessons/01_pd_dataframe.ipynb)
-2. [Lab: Pandas Summary Statistics](./M2/lessons/02_pd_agg.ipynb)
-3. [Lab: Pandas Function application](./M2/lessons/03_pd_function_application.ipynb)
-4. [Lab: Bike Sharing](./M2/lessons/04_lab_bike_sharing.ipynb)
-5. [Lab: Pandas Pivot and Melt (Reshaping)](./M2/lessons/05_pd_reshape.ipynb)
-6. [Lab: Pandas Timeseries Data](./M2/lessons/06_pd_timeseries.ipynb)
+2. [Lab: Summary Statistics](./M2/lessons/02_pd_agg.ipynb)
+3. [Lab: Reshaping DataFrames)](./M2/lessons/03_pd_reshape.ipynb)
+4. [Example: Bike Sharing](./M2/lessons/04_lab_bike_sharing.ipynb)
+5. [Lab: Timeseries](./M2/lessons/05_pd_timeseries.ipynb)
+6. [Lab: Function application](./M2/lessons/06_pd_function_application.ipynb)
 
 #### Exercises
 
@@ -74,6 +74,10 @@ Lessons and labs:
 6. Stats
     1. [US_Baby_Names](https://github.com/HassanAlgoz/pandas_exercises/tree/master/06_Stats/US_Baby_Names/Exercises.ipynb)
     2. [Wind_Stats](https://github.com/HassanAlgoz/pandas_exercises/tree/master/06_Stats/Wind_Stats/Exercises.ipynb)
+7. Time Series
+    1. [Apple_Stock](https://github.com/HassanAlgoz/pandas_exercises/blob/master/09_Time_Series/Apple_Stock/Exercises.ipynb)
+    2. [Getting_Financial_Data](https://github.com/HassanAlgoz/pandas_exercises/blob/master/09_Time_Series/Getting_Financial_Data/Exercises.ipynb)
+    3. [Investor_Flow_of_Funds_US](https://github.com/HassanAlgoz/pandas_exercises/blob/master/09_Time_Series/Investor_Flow_of_Funds_US/Exercises.ipynb)
 
 #### Videos
 
@@ -109,7 +113,7 @@ Lessons:
 
 #### Exercises
 
-1. [Exercise](./M3/exercises/m3-1_exercise.qmd)
+1. [Exercise](./M3/exercises/m3-1_exercise.ipynb)
 
 ### M3-2: Statistical Visualization
 
@@ -140,7 +144,7 @@ Lessons and labs:
 
 #### Exercises
 
-1. [Exercise](./M3/exercises/m3-2_exercise.qmd)
+1. [Exercise](./M3/exercises/m3-2_exercise.ipynb)
 2. [Visualization Exercises](./M3/exercises/viz_exercises.ipynb)
 
 ## Module 4: Inferential Statistics

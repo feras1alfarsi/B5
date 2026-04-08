@@ -46,6 +46,7 @@ format:
     toc-depth: 3
     toc-title: "Contents"
     anchor-sections: true
+    html-math-method: katex
     
   revealjs:
     theme: [default, assets/sdaia.scss]

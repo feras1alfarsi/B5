@@ -87,7 +87,3 @@ In both cases, we are interested in **multipe** statistics and **multiple** grap
 ![](../assets/inferential_statistics.png){fig-align="center" .r-stretch}
 
 At its heart, statistics is the bridge between raw observation and useful information.
-
-## Lab
-
-> "involve me and I remember"
